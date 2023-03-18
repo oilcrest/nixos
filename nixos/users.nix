@@ -1,4 +1,4 @@
-# This is my packages file
+# This is my users file
 
 { config, pkgs, lib, ... }:
 let 
