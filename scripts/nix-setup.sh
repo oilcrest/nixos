@@ -20,6 +20,8 @@ btrfs subvolume create /mnt/home
 btrfs subvolume create /mnt/nix
 btrfs subvolume create /mnt/persist
 btrfs subvolume create /mnt/log
+btrfs subvolume create /mnt/machines
+btrfs subvolume create /mnt/portables
 
 # We then take an empty *readonly* snapshot of the root subvolume,
 # which we'll eventually rollback to on every boot.
@@ -42,6 +44,12 @@ mount -o subvol=persist,compress=zstd,noatime "$DISK"3 /mnt/persist
 
 mkdir -p /mnt/var/log
 mount -o subvol=log,compress=zstd,noatime "$DISK"3 /mnt/var/log
+
+mkdir -p /mnt/var/lib/machines
+mount -o subvol=machines,compress=zstd,noatime "$DISK"3 /mnt/var/lib/machines
+
+mkdir -p /mnt/var/lib/portables
+mount -o subvol=portables,compress=zstd,noatime "$DISK"3 /mnt/var/lib/portables
 
 # don't forget this!
 mkdir /mnt/boot
