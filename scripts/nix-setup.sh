@@ -1,24 +1,6 @@
-# read password twice
-echo "First lets set the user password"
-read -s -p "Enter New User Password: " p1
-echo 
-read -s -p "Password (again): " p2
-
-if  [[ "$p1" != "$p2" ]]; then
-    echo "Passwords do not match! Exiting ..."
-    exit
-fi
-
-mypass=$(mkpasswd -m sha-512 "$p1")
-echo
-FILE="/etc/nixos/users.nix"
-echo "Writing password to $FILE"
-sed -i "s,initialHashedPassword = \".*\";$,initialHashedPassword = \""$mypass"\";," "$FILE" 
-
-FILE="/persist/etc/nixos/users.nix"
-echo "Writing password to $FILE"
-sed -i "s,initialHashedPassword = \".*\";$,initialHashedPassword = \""$mypass"\";," "$FILE" 
-
+# Script to install nixos in an 
+# Erase my darlings -style configuration
+# Root is erased on boot.
 
 DISK=/dev/vda
 
@@ -96,6 +78,16 @@ echo "Copying over script files"
 mkdir -p /mnt/persist/scripts
 cp "$SPATH"/* /mnt/persist/scripts
 
+
+echo "Now lets set the user password"
+read -s -p "Enter New User Password: " p1
+echo 
+read -s -p "Password (again): " p2
+if  [[ "$p1" != "$p2" ]]; then
+    echo "Passwords do not match! Exiting ..."
+    exit
+fi
+mkpasswd -m sha-512 "$p1" > /mnt/persist/passwords/user
 
 echo "To install the system run: "
 echo "nixos-install"

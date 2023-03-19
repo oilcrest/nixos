@@ -8,14 +8,8 @@ if  [[ "$p1" != "$p2" ]]; then
     exit
 fi
 
-mypass=$(mkpasswd -m sha-512 "$p1")
-echo
-FILE="/etc/nixos/users.nix"
-echo "Writing password to $FILE"
-sed -i "s,initialHashedPassword = \".*\";$,initialHashedPassword = \""$mypass"\";," "$FILE" 
+mkpasswd -m sha-512 "$p1" > /persist/passwords/user
+echo "New password written to /mnt/persist/passwords/user"
 
-FILE="/persist/etc/nixos/users.nix"
-echo "Writing password to $FILE"
-sed -i "s,initialHashedPassword = \".*\";$,initialHashedPassword = \""$mypass"\";," "$FILE" 
 
 
