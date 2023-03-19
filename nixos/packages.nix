@@ -54,7 +54,7 @@ rec {
       
   utils = [
       nix-prefetch-docker # Used to get hash info for building docker images with nix
-      unstable.lynis # Security auditing tool
+      #unstable.lynis # Security auditing tool
     ];
 
   gui = [
