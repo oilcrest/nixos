@@ -58,11 +58,13 @@ mount "$DISK"1 /mnt/boot
 # create configuration
 nixos-generate-config --root /mnt
 
-# now, edit nixos configuration and nixos-install
+
 # Copy over our nixos config
 echo "Copying over our nixos configs"
+
 # Copy config files to new install
-cp ../nixos/*.nix /mnt/etc/nixos
+SCRIPTDIR="$(dirname "$0")"
+cp "$SCRIPTDIR/../nixos/*.nix" /mnt/etc/nixos
 # Copy these files into persist volume (we copy from destination to include the hardware.nix)
 mkdir -p /mnt/persist/etc/nixos
 cp /mnt/etc/nixos/* /mnt/persist/etc/nixos/
