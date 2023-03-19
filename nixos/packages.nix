@@ -40,6 +40,7 @@ rec {
       gettext
       wget
       git
+      unzip
       # appimage-run
       trash-cli
       neofetch
