@@ -91,6 +91,12 @@ cp "$SPATH"/../nixos/* /mnt/etc/nixos
 mkdir -p /mnt/persist/etc/nixos
 cp /mnt/etc/nixos/* /mnt/persist/etc/nixos/
 
+
+echo "Copying over script files"
+mkdir -p /mnt/persist/scripts
+cp "$SPATH"/* /mnt/persist/scripts
+
+
 echo "To install the system run: "
 echo "nixos-install"
 echo
