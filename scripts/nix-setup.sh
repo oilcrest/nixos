@@ -63,7 +63,7 @@ nixos-generate-config --root /mnt
 echo "Copying over our nixos configs"
 
 # Copy config files to new install
-cp "../nixos/*.nix" /mnt/etc/nixos
+cp ../nixos/*.nix /mnt/etc/nixos
 # Copy these files into persist volume (we copy from destination to include the hardware.nix)
 mkdir -p /mnt/persist/etc/nixos
 cp /mnt/etc/nixos/* /mnt/persist/etc/nixos/
