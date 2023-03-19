@@ -83,11 +83,11 @@ in
 
   nixpkgs.config = {
     allowUnfree = true;
-    packageOverrides = pkgs: {
-      unstable = import <nixos-unstable> {
-        config = config.nixpkgs.config;
-      };
-    };
+    # packageOverrides = pkgs: {
+    #  unstable = import <nixos-unstable> {
+    #    config = config.nixpkgs.config;
+    #  };
+    # };
   };
 
   systemd.user.services.spice-agent = {
