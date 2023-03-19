@@ -12,7 +12,7 @@ mkswap -L Swap "$DISK"2
 swapon "$DISK"2
 
 parted "$DISK" -- mkpart primary 9GiB 100%
-mkfs.btrfs -L Butter "$DISK"3
+mkfs.btrfs -f -L Butter "$DISK"3
 
 mount "$DISK"3 /mnt
 btrfs subvolume create /mnt/root
