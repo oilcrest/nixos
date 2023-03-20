@@ -12,9 +12,9 @@ function prompt {
 
 # Make script independent of which dir it was run from
 SCRIPTDIR=$(dirname "$0")
-NIXDIR="$SCRIPTDIR/../nixos/"
+NIXDIR="$SCRIPTDIR/../nixos"
 
-# Gather the Username, Password & Hostname
+# Gather the 1.Username, 2.Password & 3.Hostname
 
 # 1. Username
 echo "Lets set the username"
@@ -59,9 +59,9 @@ else
 fi
 
 # Write out the username 
-sed "s/user = \"nixuser\"/user = ${UNAME}/" "$NIXDIR"/users.nix
+sed -i "s/user = \"nixuser\"/user = \"${UNAME}\"/" "$NIXDIR"/users.nix
 # Write out the hostname 
-sed "s/hostName = \"nixos\"/hostName = ${HOST}/" "$NIXDIR"/configuration.nix
+sed -i "s/hostName = \"nixos\"/hostName = \"${HOST}\"/" "$NIXDIR"/configuration.nix
 
 
 echo "Making File system"
