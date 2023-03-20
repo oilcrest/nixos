@@ -11,7 +11,8 @@ in
     extraGroups = [ "wheel" "video" "audio" ];
     shell = pkgs.zsh;
     # This gives a default empty password
-    initialHashedPassword = "";
+    passwordFile = "/persist/passwords/user";
+    # initialHashedPassword = "";
     # Per user packages
     # packages = with pkgs; [ nix-prefetch-docker ];
   };
