@@ -27,6 +27,8 @@ if [ "$key" == 'n' ]; then
     read -rp "Enter New Username: " UNAME
     echo "The username is: $UNAME"  
     prompt
+else 
+    UNAME=$DEFAULT_UNAME
 fi
 
 # 2. Password
@@ -52,11 +54,17 @@ if [ "$key" == 'n' ]; then
     read -rp "Enter New Hostname: " HOST
     echo "The New Hostname is: $HOST"  
     prompt
+else
+    HOST=$DEFAULT_HOST
 fi
 
+# Write out the username 
+sed "s/user = \"nixuser\"/user = ${UNAME}/" "$NIXDIR"/users.nix
+# Write out the hostname 
+sed "s/hostName = \"nixos\"/hostName = ${HOST}/" "$NIXDIR"/configuration.nix
+
+
 echo "Making File system"
-
-
 DISK=/dev/vda
 echo
 echo "Drive to erase and install nixos on is: $DISK"
@@ -142,6 +150,9 @@ echo
 echo "Copying over our nixos configs"
 # Copy config files to new install
 
+
+
+
 cp "$NIXDIR"/* /mnt/etc/nixos
 # Copy these files into persist volume (we copy from destination to include the hardware.nix)
 mkdir -p /mnt/persist/etc/nixos
@@ -153,8 +164,12 @@ mkdir -p /mnt/persist/scripts
 cp "$SCRIPTDIR"/* /mnt/persist/scripts
 
 
+
 # Write the password we entered earlier
+mkdir -p /mnt/persist/passwords
 mkpasswd -m sha-512 "$PASS1" > /mnt/persist/passwords/user
+
+
 
 echo "To install the system run: "
 echo "nixos-install"
