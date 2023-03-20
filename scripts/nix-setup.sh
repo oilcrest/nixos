@@ -2,6 +2,56 @@
 # Erase my darlings -style configuration
 # Root is erased on boot.
 
+function prompt {
+	read -n 1 -srp $'Is this correct? (y/N) ' key
+	echo
+	if [ "$key" != 'y' ]; then 
+	    exit                                                                                            
+	fi
+}
+
+# Make script independent of which dir it was run from
+SPATH=$(dirname "$0")
+NIXDIR="$SPATH/../nixos/"
+
+# Gather the Username, Password & Hostname
+
+# 1. Username
+echo "Lets set the username"
+DEFAULT_UNAME=$(grep -oP 'user =.*?"\K[^"]*' "$NIXDIR/users.nix")
+echo "Default username is: $DEFAULT_UNAME"
+
+read -n 1 -srp $'Is this ok? (Y/n) ' key
+echo
+if [ "$key" == 'n' ]; then                                                                                             
+    read -rp "Enter New Username: " UNAME
+    echo "The username is: $UNAME"  
+    prompt
+fi
+
+# 2. Password
+echo
+echo "Now lets set the user password"
+read -srp "Enter New User Password: " PASS1
+echo 
+read -srp "Password (again): " PASS2
+if  [[ "$PASS1" != "$PASS2" ]]; then
+    echo "Passwords do not match! Exiting ..."
+    exit
+fi
+
+# 3. Hostname
+echo
+echo
+echo "Now lets set the Hostname"
+DEFAULT_HOST=$(grep -oP 'hostName =.*?"\K[^"]*' "$NIXDIR/configuration.nix")
+echo "Default Hostname is: $DEFAULT_HOST"
+read -rp "Enter New Hostname: " UNAME
+echo "The New Hostname is: $UNAME"  
+prompt
+
+exit
+
 DISK=/dev/vda
 
 parted "$DISK" -- mklabel gpt
@@ -66,8 +116,7 @@ nixos-generate-config --root /mnt
 # Copy over our nixos config
 echo "Copying over our nixos configs"
 # Copy config files to new install
-# Make script independent of which dir it was run from
-SPATH=$(dirname "$0")
+
 cp "$SPATH"/../nixos/* /mnt/etc/nixos
 # Copy these files into persist volume (we copy from destination to include the hardware.nix)
 mkdir -p /mnt/persist/etc/nixos
@@ -79,15 +128,8 @@ mkdir -p /mnt/persist/scripts
 cp "$SPATH"/* /mnt/persist/scripts
 
 
-echo "Now lets set the user password"
-read -s -p "Enter New User Password: " p1
-echo 
-read -s -p "Password (again): " p2
-if  [[ "$p1" != "$p2" ]]; then
-    echo "Passwords do not match! Exiting ..."
-    exit
-fi
-mkpasswd -m sha-512 "$p1" > /mnt/persist/passwords/user
+
+mkpasswd -m sha-512 "$PASS1" > /mnt/persist/passwords/user
 
 echo "To install the system run: "
 echo "nixos-install"
