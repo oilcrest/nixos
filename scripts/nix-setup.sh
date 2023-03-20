@@ -168,7 +168,8 @@ cp "$SCRIPTDIR"/* /mnt/persist/scripts
 # Write the password we entered earlier
 mkdir -p /mnt/persist/passwords
 mkpasswd -m sha-512 "$PASS1" > /mnt/persist/passwords/user
-
+echo "Password file is:"
+cat /mnt/persist/passwords/user
 
 
 echo "To install the system run: "
