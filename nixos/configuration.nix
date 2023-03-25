@@ -155,11 +155,11 @@ in
   networking.networkmanager.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall = {
-  #   enable = true;
-  #   allowedTCPPorts = [ 22 ];
-  #   allowedUDPPorts = [ ];
-  # };
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 ];
+    allowedUDPPorts = [ ];
+  };
 
 
   #############
