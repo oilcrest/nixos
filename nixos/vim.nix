@@ -9,6 +9,10 @@
       customRC = ''
         set number
         set list
+        set tabstop=2
+        set softtabstop=2
+        set cursoorline
+        set expandtab
         "colorscheme duskfox 
         "colorscheme nightfox 
         "colorscheme terafox 
