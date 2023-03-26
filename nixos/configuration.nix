@@ -14,6 +14,7 @@ in
       "${impermanence}/nixos.nix"
       ./hardware-configuration.nix
       ./users.nix
+      ./vim.nix
     ];
 
   # filesystems
@@ -227,12 +228,8 @@ in
   ### Programs ###
   ################
 
-  programs.neovim = {
-    enable = true;
-    # package = unstable.neovim;
-    viAlias = true;
-    vimAlias = true;
-  };
+  # Set neovim as the default editor
+  environment.variables.EDITOR = "nvim";
 
   programs.zsh.enable = true;
   # environment.shellAliases = {
