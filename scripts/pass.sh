@@ -1,4 +1,4 @@
-# read password twice
+#  read password twice
 read -s -p "Enter New User Password: " p1
 echo 
 read -s -p "Password (again): " p2
