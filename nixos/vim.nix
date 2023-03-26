@@ -14,8 +14,8 @@
         "colorscheme terafox 
         "colorscheme tokyonight-moon 
         "colorscheme lunaperche 
-        "colorscheme carbonfox 
-        colorscheme kanagawa 
+        colorscheme carbonfox 
+        "colorscheme kanagawa 
         "colorscheme embark 
       '';
       packages.myVimPackage = with pkgs.vimPlugins; {
