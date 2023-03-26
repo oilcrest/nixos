@@ -17,8 +17,8 @@
         "colorscheme nightfox 
         "colorscheme terafox 
         "colorscheme tokyonight-moon 
-        "colorscheme lunaperche 
-        colorscheme carbonfox 
+        colorscheme lunaperche 
+        "colorscheme carbonfox 
         "colorscheme kanagawa 
         "colorscheme embark 
       '';
