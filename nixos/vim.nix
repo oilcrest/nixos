@@ -16,10 +16,10 @@
         "colorscheme duskfox 
         "colorscheme nightfox 
         "colorscheme terafox 
-        colorscheme tokyonight-moon 
+        "colorscheme tokyonight-moon 
         "colorscheme lunaperche 
         "colorscheme carbonfox 
-        "colorscheme kanagawa 
+        colorscheme kanagawa 
         "colorscheme embark 
       '';
       packages.myVimPackage = with pkgs.vimPlugins; {
