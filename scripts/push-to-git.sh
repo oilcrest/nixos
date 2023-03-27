@@ -53,7 +53,7 @@ if [ "$key" == 'y' ]; then
   git add .
   read -p "Enter a commit message: " MESSAGE
   # get a commit message
-  git commit -m $MESSAGE
+  git commit -m "'$MESSAGE'"
   git push
   echo "Done!"
 fi
