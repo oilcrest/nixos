@@ -15,6 +15,7 @@ in
       ./hardware-configuration.nix
       ./users.nix
       ./vim.nix
+      ./myparams.nix
     ];
 
   # filesystems
@@ -152,7 +153,8 @@ in
   ################
   ##  Network  ###
   ################
-  networking.hostName = "nixos";
+  # networking.hostName = "nixos";
+  networking.hostName = config.myParams.myhostname;
   networking.networkmanager.enable = true;
 
   # Open ports in the firewall.

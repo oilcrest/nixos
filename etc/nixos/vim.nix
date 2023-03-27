@@ -8,18 +8,20 @@
     configure = {
       customRC = ''
         set number
+        set relativenumber
         set list
-        set tabstop=2
-        set softtabstop=2
-        set cursoorline
+        set tabstop=4
+        set softtabstop=4
         set expandtab
+        set shiftwidth=2
+        set cursorline
         "colorscheme duskfox 
-        "colorscheme nightfox 
+        colorscheme nightfox 
         "colorscheme terafox 
         "colorscheme tokyonight-moon 
         "colorscheme lunaperche 
         "colorscheme carbonfox 
-        colorscheme kanagawa 
+        "colorscheme kanagawa 
         "colorscheme embark 
       '';
       packages.myVimPackage = with pkgs.vimPlugins; {
@@ -31,6 +33,8 @@
           nightfox-nvim # duskfox, nightfox, terafox & carbonfox
           kanagawa-nvim # Nice Japanese Vibe!
           embark-vim # An old favourite!
+          lush-nvim # Needed by zenbones
+          zenbones-nvim
         ];
       };
     };
