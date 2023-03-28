@@ -16,10 +16,10 @@ git pull > /dev/null # git pull silently
 # Which Config Files to keep in sync
 files=(
   etc/nixos/configuration.nix
-  # etc/packages.nix
-  # etc/users.nix
+  etc/nixos/packages.nix
+  etc/nixos/users.nix
   etc/nixos/vim.nix
-  # scripts/changepass.sh
+  scripts/changepass.sh
   scripts/cruft.sh
   scripts/nix-setup.sh
   scripts/pull-from-git.sh

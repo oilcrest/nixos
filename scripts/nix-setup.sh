@@ -5,9 +5,7 @@
 function prompt {
 	read -n 1 -srp $'Is this correct? (y/N) ' key
 	echo
-	if [ "$key" != 'y' ]; then 
-	    exit                                                                                            
-	fi
+	if [ "$key" != 'y' ]; then exit
 }
 
 function get_user_info {
@@ -42,23 +40,43 @@ function get_user_info {
     echo
     echo
     echo "Now lets set the Hostname"
-    DEFAULT_HOST=$(grep -oP 'hostName =.*?"\K[^"]*' "$NIXDIR/configuration.nix")
+    DEFAULT_HOST=$(grep -oP 'myhostname =.*?"\K[^"]*' "$NIXDIR/myparams.nix")
     echo "Default Hostname is: $DEFAULT_HOST"
     read -n 1 -srp $'Is this ok? (Y/n) ' key
     echo
-    if [ "$key" == 'n' ]; then                                                                                             
-        read -rp "Enter New Hostname: " HOST
-        echo "The New Hostname is: $HOST"  
-        prompt
+    if [ "$key" == 'n' ]; then
+      read -rp "Enter New Hostname: " HOST
+      echo "The New Hostname is: $HOST"  
+      prompt
     else
-        HOST=$DEFAULT_HOST
+      HOST=$DEFAULT_HOST
     fi
 
+
+    # 4. SSH Key
+    echo
+    echo
+    echo "Now lets set the SSH key"
+    DEFAULT_SSHKEY=$(grep -oP 'mysshkey =.*?"\K[^"]*' "$NIXDIR/myparams.nix")
+    SSHKEY=$DEFAULT_SSHKEY
+    echo "Current SSH Key is: $DEFAULT_SSHKEY"
+    read -n 1 -srp $'Is this ok? (Y/n) ' key
+    while [ $key == "n" ]
+    do
+      echo
+      read -rp "Enter an SSH Key for user $UNAME: " SSHKEY
+      echo "The New SSH Key is: $SSHKEY"  
+      read -n 1 -srp $'Is this ok? (Y/n) ' key
+    done
+
     # Write out the username 
-    sed -i "s/user = \"nixuser\"/user = \"${UNAME}\"/" "$NIXDIR"/users.nix
+    sed -i "s#myusername = \".*\";#myusername = \"${UNAME}\";#" "$NIXDIR/myparams.nix"
     # Write out the hostname 
-    sed -i "s/hostName = \"nixos\"/hostName = \"${HOST}\"/" "$NIXDIR"/configuration.nix
+    sed -i "s#myhostname = \".*\"#myhostname = \"${HOST}\";#" "$NIXDIR/myparams.nix"
+    # Write out the ssh-key 
+    sed -i "s#mysshkey = \".*\";#mysshkey = \"${SSHKEY}\";#" "$NIXDIR/myparams.nix"
 }
+
 
 function build_file_system {
     echo "Making File system"

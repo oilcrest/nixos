@@ -11,6 +11,7 @@
 rec {
 
   my-package-set = builtins.concatLists [
+      install
       testing
       cli
       utils
@@ -19,6 +20,18 @@ rec {
       kde
     ];
 
+  # Base packages I want on initial install
+  install = [
+      direnv
+      wget
+      git
+      unzip
+      trash-cli
+      neofetch
+      efibootmgr
+      zsh
+    ];
+      
 
   testing = [
       # nix-software-center
