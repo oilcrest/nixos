@@ -26,6 +26,7 @@
       '';
       packages.myVimPackage = with pkgs.vimPlugins; {
         start = [ 
+          ale # Asynchronous Lint Engine (for e.g. shellcheck)
           vim-nix # Syntax highlight for nix files
           vim-commentary # Tim Pope's commentary plugin
           # Color Schemes

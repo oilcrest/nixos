@@ -47,6 +47,7 @@ rec {
     ];
   
   cli = [
+      shellcheck
       direnv
       pv # progress viewer
       desktop-file-utils
