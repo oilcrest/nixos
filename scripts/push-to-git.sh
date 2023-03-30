@@ -16,6 +16,7 @@ git pull > /dev/null # git pull silently
 # Which Config Files to keep in sync
 files=(
   etc/nixos/configuration.nix
+  etc/nixos/erase-your-darlings.nix
   etc/nixos/packages.nix
   etc/nixos/users.nix
   etc/nixos/vim.nix
@@ -32,10 +33,11 @@ do
   B="$GITDIR/$f"
 
   if [[ "$(diff $A $B)" ]]; then
+    clear
+    diff $A $B 
     echo
     echo "File $f differs" 
-    echo "The diff is as follows:"
-    diff $A $B 
+    echo "The diff is as above."
     read -n 1 -srp $'Do you wish to push to git directory(y/N)? ' key
     echo
     if [ "$key" == 'y' ]; then
