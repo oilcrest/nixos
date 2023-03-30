@@ -11,7 +11,7 @@ in
   imports =
     [
       ./hardware-configuration.nix
-      ./erase-your-darlings.nix
+      ./impermanence.nix
       ./users.nix
       ./vim.nix
       ./myparams.nix

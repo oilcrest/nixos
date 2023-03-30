@@ -16,7 +16,7 @@ git pull > /dev/null # git pull silently
 # Which Config Files to keep in sync
 files=(
   etc/nixos/configuration.nix
-  etc/nixos/erase-your-darlings.nix
+  etc/nixos/impermanence.nix
   etc/nixos/packages.nix
   etc/nixos/users.nix
   etc/nixos/vim.nix
