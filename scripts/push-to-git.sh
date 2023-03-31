@@ -15,11 +15,14 @@ git pull > /dev/null # git pull silently
 
 # Which Config Files to keep in sync
 files=(
+  # Nixos directory
   etc/nixos/configuration.nix
   etc/nixos/impermanence.nix
+  etc/nixos/fs.nix
   etc/nixos/packages.nix
   etc/nixos/users.nix
   etc/nixos/vim.nix
+  # Scripts directory
   scripts/changepass.sh
   scripts/cruft.sh
   scripts/nix-setup.sh

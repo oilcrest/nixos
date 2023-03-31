@@ -11,6 +11,7 @@ in
   imports =
     [
       ./hardware-configuration.nix
+      ./fs.nix
       ./impermanence.nix
       ./users.nix
       ./vim.nix
