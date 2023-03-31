@@ -6,20 +6,16 @@
 
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
+  myuser = config.myParams.myusername;
 in
 {
-  imports =
-    [
-      "${impermanence}/nixos.nix"
-    ];
+  imports = [ "${impermanence}/nixos.nix" ];
 
-  # filesystems
-  # fileSystems."/".options = ["compress=zstd" "noatime" ];
-  # fileSystems."/home".options = ["compress=zstd" "noatime" ];
-  # fileSystems."/nix".options = ["compress=zstd" "noatime" ];
-  # fileSystems."/persist".options = ["compress=zstd" "noatime" ];
-  # fileSystems."/var/log".options = ["compress=zstd" "noatime" ];
+    users.users.${myuser} = {
+      passwordFile = "/persist/passwords/user";
+    };
 
+  # filesystem modifications needed for impermanence
   fileSystems."/persist".options = [ "compress=zstd" "noatime" ];
   fileSystems."/persist".neededForBoot = true;
   fileSystems."/var/log".neededForBoot = true;

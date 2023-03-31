@@ -13,8 +13,8 @@ in
     extraGroups = [ "wheel" "video" "audio" ];
     shell = pkgs.zsh;
     # This gives a default empty password
-    passwordFile = "/persist/passwords/user";
-    # initialHashedPassword = "";
+    initialHashedPassword = "";
+    # passwordFile = "/persist/passwords/user";
     openssh.authorizedKeys.keys = [ "${mysshkey}" ];
     # Per user packages
     # packages = with pkgs; [ nix-prefetch-docker ];

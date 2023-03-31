@@ -109,7 +109,10 @@ in
 	enable=true;
   	displayManager.sddm.enable = true;
   	desktopManager.plasma5.enable = true;
-	#displayManager.setupCommands = "xrandr -display :0.0 --output Virtual-1 --mode 1920x1080";
+    # displayManager.setupCommands = "xrandr --output Virtual-1 --mode 1920x1064 --rate 59.97";
+    displayManager.setupCommands = ''
+      xrandr --output Virtual-1 --mode 1920x1080 --rate 60
+      '';
     # X11 keymap
     layout = "gb";
   };
