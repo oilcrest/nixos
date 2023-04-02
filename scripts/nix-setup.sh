@@ -97,7 +97,7 @@ function build_file_system {
     echo "WARNING - About to erase $DISK and install NixOS."
     prompt
 
-    nix run github:nix-community/disko -- --mode zap_create_mount "../etc/nixos/disko-config.nix" --arg disks '[ "$DISK" ]'
+    nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode zap_create_mount "../etc/nixos/disko-config.nix" --arg disks '[ "$DISK" ]'
 
 
     # parted "$DISK" -- mklabel gpt
