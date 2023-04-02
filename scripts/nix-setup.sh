@@ -14,7 +14,7 @@ function get_user_info {
     # Gather the 1.Username, 2.Password & 3.Hostname
     # 1. Username
     echo "Lets set the username"
-    DEFAULT_UNAME=$(grep -oP 'user =.*?"\K[^"]*' "$NIXDIR/users.nix")
+    DEFAULT_UNAME=$(grep -oP 'myusername =.*?"\K[^"]*' "$NIXDIR/myparams.nix")
     echo "Default username is: $DEFAULT_UNAME"
 
     read -n 1 -srp $'Is this ok? (Y/n) ' key
