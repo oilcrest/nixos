@@ -74,7 +74,7 @@ function get_user_info {
     # Write out the username 
     sed -i "s#myusername = \".*\";#myusername = \"${UNAME}\";#" "$NIXDIR/myparams.nix"
     # Write out the hostname 
-    sed -i "s#myhostname = \".*\"#myhostname = \"${HOST}\";#" "$NIXDIR/myparams.nix"
+    sed -i "s#myhostname = \".*\";#myhostname = \"${HOST}\";#" "$NIXDIR/myparams.nix"
     # Write out the ssh-key 
     sed -i "s#mysshkey = \".*\";#mysshkey = \"${SSHKEY}\";#" "$NIXDIR/myparams.nix"
 }
