@@ -193,7 +193,7 @@ function generate_config {
 
 # Make script independent of which dir it was run from
 SCRIPTDIR=$(dirname "$0")
-NIXDIR="$SCRIPTDIR/../nixos"
+NIXDIR="$SCRIPTDIR/../etc/nixos"
 
 get_user_info
 build_file_system
