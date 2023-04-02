@@ -97,7 +97,8 @@ function build_file_system {
     echo "WARNING - About to erase $DISK and install NixOS."
     prompt
 
-    nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode zap_create_mount /root/nixos-main/etc/nixos/disko-config.nix --arg disks '[ "$DISK" ]'
+    ARGSTRING="--arg disks '[ " + "\"" + "$DISK" + "\"" + " ]'"
+    nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode zap_create_mount /root/nixos-main/etc/nixos/disko-config.nix "$ARGSTRING"
 
     # nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode zap_create_mount /root/nixos-main/etc/nixos/disko-config.nix --arg disks '[ "/dev/vda" ]'
 
