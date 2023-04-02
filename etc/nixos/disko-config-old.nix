@@ -68,8 +68,7 @@
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
               };
-            };
-	      }
+            }
         ];
       };
     };
