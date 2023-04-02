@@ -5,7 +5,9 @@
 function prompt {
 	read -n 1 -srp $'Is this correct? (y/N) ' key
 	echo
-	if [ "$key" != 'y' ]; then exit
+	if [ "$key" != 'y' ]; then 
+        exit
+    fi
 }
 
 function get_user_info {
@@ -61,7 +63,7 @@ function get_user_info {
     SSHKEY=$DEFAULT_SSHKEY
     echo "Current SSH Key is: $DEFAULT_SSHKEY"
     read -n 1 -srp $'Is this ok? (Y/n) ' key
-    while [ $key == "n" ]
+    while [ "$key" == "n" ]
     do
       echo
       read -rp "Enter an SSH Key for user $UNAME: " SSHKEY
