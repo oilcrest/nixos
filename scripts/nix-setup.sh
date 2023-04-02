@@ -131,7 +131,7 @@ function build_file_system {
     # We then take an empty *readonly* snapshot of the root subvolume,
     # which we'll eventually rollback to on every boot.
     echo "Making empty snapshot of root"
-    btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
+    btrfs subvolume snapshot -r /mnt/ /mnt/rootfs-blank
 
     # umount /mnt
 
