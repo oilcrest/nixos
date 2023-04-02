@@ -6,17 +6,22 @@
 
 let
   packageGroups = import ./packages.nix { inherit pkgs; };
+  disko = builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz";
 in
 {
   imports =
     [
       ./hardware-configuration.nix
-      ./fs.nix
+      "${disko}/module.nix"
       ./impermanence.nix
       ./users.nix
       ./vim.nix
       ./myparams.nix
     ];
+
+  disko.devices = pkgs.callPackage ./disko-config.nix {
+    disks = [ "/dev/vda" ]; 
+  };
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -108,6 +113,7 @@ in
   services.xserver = {
 	enable=true;
   	displayManager.sddm.enable = true;
+    # displayManager.defaultSession = "plasmawayland";
   	desktopManager.plasma5.enable = true;
     # displayManager.setupCommands = "xrandr --output Virtual-1 --mode 1920x1064 --rate 59.97";
     displayManager.setupCommands = ''

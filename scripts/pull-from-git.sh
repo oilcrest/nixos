@@ -11,9 +11,10 @@ GITDIR="/persist/git/nixos/"
 # Which Config Files to keep in sync
 files=(
 configuration.nix
+# disko-config.nix
 # fs.nix
 # impermanence.nix
-# packages.nix
+# packag:es.nix
 # users.nix
 vim.nix
 )

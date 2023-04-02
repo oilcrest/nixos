@@ -17,6 +17,7 @@ git pull > /dev/null # git pull silently
 files=(
   # Nixos directory
   etc/nixos/configuration.nix
+  etc/nixos/disko-config.nix
   etc/nixos/impermanence.nix
   etc/nixos/fs.nix
   etc/nixos/packages.nix
