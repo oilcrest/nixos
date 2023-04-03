@@ -191,7 +191,12 @@ function generate_config {
     mkdir -p /mnt/persist/passwords
     mkpasswd -m sha-512 "$PASS1" > /mnt/persist/passwords/user
     echo "Password file is:"
-    cat /mnt/persist/passwords/user
+    ll /mnt/persist/passwords/user
+    
+    echo
+    echo "To install the system run: "
+    echo "nixos-install"
+    echo
 }
 
 # Make script independent of which dir it was run from
@@ -202,9 +207,7 @@ get_user_info
 build_file_system
 generate_config
 
-echo "To install the system run: "
-echo "nixos-install"
-echo
+
 
 
 
