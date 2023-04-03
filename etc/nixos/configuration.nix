@@ -19,9 +19,7 @@ in
       ./myparams.nix
     ];
 
-  disko.devices = pkgs.callPackage ./disko-config.nix {
-    disks = [ "/dev/vda" ]; 
-  };
+  disko.devices = pkgs.callPackage ./disko-config.nix { };
 
   nixpkgs.config = {
     allowUnfree = true;
