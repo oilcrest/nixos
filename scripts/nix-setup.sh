@@ -191,7 +191,7 @@ function generate_config {
     mkdir -p /mnt/persist/passwords
     mkpasswd -m sha-512 "$PASS1" > /mnt/persist/passwords/user
     echo "Password file is:"
-    ll /mnt/persist/passwords/user
+    ls -lh /mnt/persist/passwords/user
     
     echo
     echo "To install the system run: "
