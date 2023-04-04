@@ -1,4 +1,4 @@
-# This is the packages.nix file
+# This :qwis the packages.nix file
 { pkgs, ... }: with pkgs;
 #let
 #  nix-software-center = (import (pkgs.fetchFromGitHub {
@@ -12,12 +12,12 @@ rec {
 
   my-package-set = builtins.concatLists [
       install
-      testing
-      cli
-      utils
-      gui
-      misc
-      kde
+      #testing
+      #cli
+      #utils
+      #gui
+      #misc
+      #kde
     ];
 
   # Base packages I want on initial install
