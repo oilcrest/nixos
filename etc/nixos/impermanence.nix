@@ -20,46 +20,53 @@ in
   fileSystems."/persist".neededForBoot = true;
   fileSystems."/var/log".neededForBoot = true;
 
+  fileSystems."/" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    # You must set mode=755. The default is 777, and OpenSSH will complain and disallow logins
+    options = [ "relatime" "mode=755" ];
+  };
+  
   # reset / at each boot
   # Note `lib.mkBefore` is used instead of `lib.mkAfter` here.
-  boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
-    mkdir -p /mnt
+  #boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
+  #  mkdir -p /mnt
 
-    # We first mount the btrfs root to /mnt
-    # so we can manipulate btrfs subvolumes.
-    mount -o subvol=/ /dev/vda3 /mnt
+  #  # We first mount the btrfs root to /mnt
+  #  # so we can manipulate btrfs subvolumes.
+  #  mount -o subvol=/ /dev/vda3 /mnt
 
-    # While we're tempted to just delete /rootfs and create
-    # a new snapshot from /root-blank, /rootfs is already
-    # populated at this point with a number of subvolumes,
-    # which makes `btrfs subvolume delete` fail.
-    # So, we remove them first.
-    #
-    # /rootfs contains subvolumes:
-    # - /rootfs/var/lib/portables
-    # - /rootfs/var/lib/machines
-    #
-    # I suspect these are related to systemd-nspawn, but
-    # since I don't use it I'm not 100% sure.
-    # Anyhow, deleting these subvolumes hasn't resulted
-    # in any issues so far, except for fairly
-    # benign-looking errors from systemd-tmpfiles.
-    btrfs subvolume list -o /mnt/rootfs |
-    cut -f9 -d' ' |
-    while read subvolume; do
-      echo "deleting /$subvolume subvolume..."
-      btrfs subvolume delete "/mnt/$subvolume"
-    done &&
-    echo "deleting /rootfs subvolume..." &&
-    btrfs subvolume delete /mnt/rootfs
+  #  # While we're tempted to just delete /rootfs and create
+  #  # a new snapshot from /root-blank, /rootfs is already
+  #  # populated at this point with a number of subvolumes,
+  #  # which makes `btrfs subvolume delete` fail.
+  #  # So, we remove them first.
+  #  #
+  #  # /rootfs contains subvolumes:
+  #  # - /rootfs/var/lib/portables
+  #  # - /rootfs/var/lib/machines
+  #  #
+  #  # I suspect these are related to systemd-nspawn, but
+  #  # since I don't use it I'm not 100% sure.
+  #  # Anyhow, deleting these subvolumes hasn't resulted
+  #  # in any issues so far, except for fairly
+  #  # benign-looking errors from systemd-tmpfiles.
+  #  btrfs subvolume list -o /mnt/rootfs |
+  #  cut -f9 -d' ' |
+  #  while read subvolume; do
+  #    echo "deleting /$subvolume subvolume..."
+  #    btrfs subvolume delete "/mnt/$subvolume"
+  #  done &&
+  #  echo "deleting /rootfs subvolume..." &&
+  #  btrfs subvolume delete /mnt/rootfs
 
-    echo "restoring blank /rootfs subvolume..."
-    btrfs subvolume snapshot /mnt/rootfs-blank /mnt/rootfs
+  #  echo "restoring blank /rootfs subvolume..."
+  #  btrfs subvolume snapshot /mnt/rootfs-blank /mnt/rootfs
 
-    # Once we're done rolling back to a blank snapshot,
-    # we can unmount /mnt and continue on the boot process.
-    umount /mnt
-  '';
+  #  # Once we're done rolling back to a blank snapshot,
+  #  # we can unmount /mnt and continue on the boot process.
+  #  umount /mnt
+  #'';
 
   # configure impermanence
   environment.persistence."/persist" = {
