@@ -91,6 +91,7 @@ function format_disko {
     # nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode zap_create_mount /root/nixos-main/etc/nixos/disko-config.nix --arg disks '[ "/dev/vda" ]'
     echo "Manually mounting disk"
     mount "$DISK"3 /mnt
+    mount "$DISK"1 /boot
     echo "Making empty snapshot of root"
     btrfs subvolume snapshot -r /mnt/ /mnt/rootfs-blank
 }
