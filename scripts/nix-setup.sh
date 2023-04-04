@@ -114,7 +114,7 @@ function format_manual {
     # We then take an empty *readonly* snapshot of the root subvolume,
     # which we'll eventually rollback to on every boot.
     echo "Making empty snapshot of root"
-    btrfs subvolume snapshot -r /mnt/ /mnt/rootfs-blank
+    btrfs subvolume snapshot -r /mnt/ /mnt/root-blank
 
     umount /mnt
 
@@ -155,8 +155,8 @@ function build_file_system {
     echo "WARNING - About to erase $DISK and install NixOS."
     prompt
 
-    format_manual
-    # format_disko
+    # format_manual
+    format_disko
 
     echo "Disk configuration complete!"
     echo
