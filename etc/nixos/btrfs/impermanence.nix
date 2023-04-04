@@ -27,34 +27,34 @@ in
 
     # We first mount the btrfs root to /mnt
     # so we can manipulate btrfs subvolumes.
-    mount -o subvol=/ /dev/vda3 /mnt
+    mount -o subvol=@root /dev/vda3 /mnt
 
-    # While we're tempted to just delete /rootfs and create
-    # a new snapshot from /root-blank, /rootfs is already
+    # While we're tempted to just delete @root and create
+    # a new snapshot from @root-blank, @root is already
     # populated at this point with a number of subvolumes,
     # which makes `btrfs subvolume delete` fail.
     # So, we remove them first.
     #
-    # /rootfs contains subvolumes:
-    # - /rootfs/var/lib/portables
-    # - /rootfs/var/lib/machines
+    # @root contains subvolumes:
+    # - /var/lib/portables
+    # - /var/lib/machines
     #
     # I suspect these are related to systemd-nspawn, but
     # since I don't use it I'm not 100% sure.
     # Anyhow, deleting these subvolumes hasn't resulted
     # in any issues so far, except for fairly
     # benign-looking errors from systemd-tmpfiles.
-    btrfs subvolume list -o /mnt/rootfs |
+    btrfs subvolume list -o /mnt |
     cut -f9 -d' ' |
     while read subvolume; do
       echo "deleting /$subvolume subvolume..."
       btrfs subvolume delete "/mnt/$subvolume"
     done &&
-    echo "deleting /rootfs subvolume..." &&
-    btrfs subvolume delete /mnt/rootfs
+    echo "deleting @root subvolume..." &&
+    btrfs subvolume delete /mnt/@root
 
-    echo "restoring blank /rootfs subvolume..."
-    btrfs subvolume snapshot /mnt/rootfs-blank /mnt/rootfs
+    echo "restoring blank @root subvolume..."
+    btrfs subvolume snapshot /mnt/@root-blank /mnt/@root
 
     # Once we're done rolling back to a blank snapshot,
     # we can unmount /mnt and continue on the boot process.
