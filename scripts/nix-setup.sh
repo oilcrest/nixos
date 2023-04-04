@@ -81,19 +81,19 @@ function get_user_info {
 
 function format_disko {
     # format the disk
-    wipefs -a -f $DISK
+    # wipefs -a -f $DISK
     NIX="nix --extra-experimental-features 'nix-command flakes'"
     disko="$NIX run github:nix-community/disko --"
     DCONFIG="/root/nixos-main/etc/nixos/disko-config.nix"
-    DISKO_CMD="$disko --mode create $DCONFIG --arg disks '[ ""\"""$DISK""\""" ]'"
+    DISKO_CMD="$disko --mode zap_create_mount $DCONFIG --arg disks '[ ""\"""$DISK""\""" ]'"
     # DISKO_CMD="nix --extra-experimental-features 'nix-command flakes' run github:nix-community/disko -- --mode zap_create_mount /root/nixos-main/etc/nixos/disko-config.nix --arg disks '[ ""\"""$DISK""\""" ]'"
     eval "$DISKO_CMD"
     # nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode zap_create_mount /root/nixos-main/etc/nixos/disko-config.nix --arg disks '[ "/dev/vda" ]'
-    echo "Manually mounting disk"
-    mount "$DISK"3 /mnt
-    mount "$DISK"1 /mnt/boot
-    echo "Making empty snapshot of root"
-    btrfs subvolume snapshot -r /mnt/ /mnt/rootfs-blank
+    # echo "Manually mounting disk"
+    # mount "$DISK"3 /mnt
+    # mount "$DISK"1 /mnt/boot
+    # echo "Making empty snapshot of root"
+    # btrfs subvolume snapshot -r /mnt/ /mnt/rootfs-blank
 }
 
 function format_manual {
