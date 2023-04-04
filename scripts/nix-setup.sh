@@ -143,7 +143,7 @@ function format_manual {
     mount -o subvol=portables,compress=zstd,noatime "$DISK"3 /mnt/var/lib/portables
     # don't forget this!
     mkdir /mnt/boot
-    mount "$DISK"1 /mnt/boot
+    mount "$DISK"3 /mnt/boot
 }
 
 function build_file_system {
