@@ -89,8 +89,10 @@ function format_disko {
     # DISKO_CMD="nix --extra-experimental-features 'nix-command flakes' run github:nix-community/disko -- --mode zap_create_mount /root/nixos-main/etc/nixos/disko-config.nix --arg disks '[ ""\"""$DISK""\""" ]'"
     eval "$DISKO_CMD"
     # nix --extra-experimental-features nix-command --extra-experimental-features flakes run github:nix-community/disko -- --mode zap_create_mount /root/nixos-main/etc/nixos/disko-config.nix --arg disks '[ "/dev/vda" ]'
+    echo "Manually mounting disk"
     mount "$DISK"3 /mnt
-
+    echo "Making empty snapshot of root"
+    btrfs subvolume snapshot -r /mnt/ /mnt/rootfs-blank
 }
 
 function format_manual {
