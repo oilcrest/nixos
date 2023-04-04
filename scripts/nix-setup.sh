@@ -96,6 +96,7 @@ function format_disko {
     mkdir /mnt2
     mount -o subvol=@root "$DISK"3 /mnt2
     btrfs subvolume snapshot -r /mnt2 /mnt2/@root-blank
+    btrfs subvolume list /mnt2
     umount /mnt2
 }
 
