@@ -40,30 +40,33 @@
               type = "btrfs";
               extraArgs = [ "-f" ]; # Override existing partition
               subvolumes = {
-                # Subvolume name is different from mountpoint
-                # "/rootfs" = {
-                #   mountpoint = "/";
-                #   mountOptions = [ "compress=zstd" "noatime" ];
-                # };
-                # Mountpoints inferred from subvolume name
-                "/home" = {
+                "@" = { }; # Not mounted
+                "@root" = {
+                  mountpoint = "/";
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
+                Mountpoints inferred from subvolume name
+                "@home" = {
+                  mountpoint = "/home";
                   mountOptions = [ "compress=zstd" ];
                 };
-                "/nix" = {
+                "@nix" = {
+                  mountpoint = "/nix";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "/persist" = {
+                "@persist" = {
+                  mountpoint = "/persist";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "/log" = {
+                "@log" = {
                   mountpoint = "/var/log";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "/machines" = {
+                "@machines" = {
                   mountpoint = "/var/lib/machines";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "/portables" = {
+                "@portables" = {
                   mountpoint = "/var/lib/portables";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
