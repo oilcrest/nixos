@@ -41,10 +41,10 @@
               extraArgs = [ "-f" ]; # Override existing partition
               subvolumes = {
                 # Subvolume name is different from mountpoint
-                "/rootfs" = {
-                  mountpoint = "/";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
+                # "/rootfs" = {
+                #   mountpoint = "/";
+                #   mountOptions = [ "compress=zstd" "noatime" ];
+                # };
                 # Mountpoints inferred from subvolume name
                 "/home" = {
                   mountOptions = [ "compress=zstd" ];
