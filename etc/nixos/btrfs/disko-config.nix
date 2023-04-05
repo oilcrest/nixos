@@ -47,10 +47,6 @@
                   mountpoint = "/";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/.snapshots" = {
-                  mountpoint = "/.snapshots";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
                 # Mountpoints inferred from subvolume name
                 "@/home" = {
                   mountpoint = "/home";
