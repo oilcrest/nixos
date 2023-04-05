@@ -192,7 +192,7 @@ function generate_config {
     cp -r "$NIXDIR"/* /mnt/etc/nixos
     # Copy these files into persist volume (we copy from destination to include the hardware.nix)
     mkdir -p /mnt/persist/etc/nixos
-    cp /mnt/etc/nixos/* /mnt/persist/etc/nixos/
+    cp -r /mnt/etc/nixos/* /mnt/persist/etc/nixos/
 
 
     echo "Copying over script files"
