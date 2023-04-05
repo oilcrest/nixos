@@ -43,40 +43,40 @@
                 "/@" = {
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/root" = {
+                "/@/root" = {
                   mountpoint = "/";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
                 # Mountpoints inferred from subvolume name
-                "@/home" = {
+                "/@/home" = {
                   mountpoint = "/home";
                   mountOptions = [ "compress=zstd" ];
                 };
-                "@/nix" = {
+                "/@/nix" = {
                   mountpoint = "/nix";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/persist" = {
+                "/@/persist" = {
                   mountpoint = "/persist";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/log" = {
+                "/@/log" = {
                   mountpoint = "/var/log";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/srv" = {
+                "/@/srv" = {
                   mountpoint = "/srv";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/tmp" = {
+                "/@/tmp" = {
                   mountpoint = "/tmp";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/machines" = {
+                "/@/machines" = {
                   mountpoint = "/var/lib/machines";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/portables" = {
+                "/@/portables" = {
                   mountpoint = "/var/lib/portables";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
