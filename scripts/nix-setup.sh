@@ -93,11 +93,16 @@ function format_disko {
     # mount -o subvol=@root "$DISK"3 /mnt
     # mount "$DISK"1 /mnt/boot
     echo "Making empty snapshot of root"
-    mkdir /mnt2
-    mount -o subvol=@ "$DISK"3 /mnt2
+    MOUNT="/mnt2"
+    mkdir $MOUNT
+    mount -o subvol=@ "$DISK"3 "$MOUNT"
+    # Make tmp and srv directories so subvolumes are not autocreated
+    # by systemd, stopping deletion of root subvolume
+    mkdir -p "$MOUNT/root/srv"
+    mkdir -p "$MOUNT/root/tmp"
     btrfs subvolume snapshot -r /mnt2/root /mnt2/root-blank
     btrfs subvolume list /mnt2
-    umount /mnt2
+    umount "$MOUNT"
 }
 
 function format_manual {
