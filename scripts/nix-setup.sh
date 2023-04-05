@@ -95,7 +95,7 @@ function format_disko {
     echo "Making empty snapshot of root"
     mkdir /mnt2
     mount -o subvol=@ "$DISK"3 /mnt2
-    btrfs subvolume snapshot -r /mnt2 /mnt2/@-blank
+    btrfs subvolume snapshot -r /mnt2/root /mnt2/root-blank
     btrfs subvolume list /mnt2
     umount /mnt2
 }
