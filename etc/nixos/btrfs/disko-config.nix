@@ -40,7 +40,7 @@
               type = "btrfs";
               extraArgs = [ "-f" ]; # Override existing partition
               subvolumes = {
-                "@" = {
+                "/@" = {
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
                 "@/root" = {
