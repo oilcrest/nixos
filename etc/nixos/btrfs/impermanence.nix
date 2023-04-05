@@ -27,7 +27,7 @@ in
 
     # We first mount the btrfs root to /mnt
     # so we can manipulate btrfs subvolumes.
-    mount -o subvol=@root /dev/vda3 /mnt
+    mount -o subvol=@ /dev/vda3 /mnt
 
     # While we're tempted to just delete @root and create
     # a new snapshot from @root-blank, @root is already
@@ -51,10 +51,10 @@ in
       btrfs subvolume delete "/mnt/$subvolume"
     done &&
     echo "deleting @root subvolume..." &&
-    btrfs subvolume delete /mnt/@root
+    btrfs subvolume delete /mnt/@
 
     echo "restoring blank @root subvolume..."
-    btrfs subvolume snapshot /mnt/@root-blank /mnt/@root
+    btrfs subvolume snapshot /mnt/@-blank /mnt/@
 
     # Once we're done rolling back to a blank snapshot,
     # we can unmount /mnt and continue on the boot process.
