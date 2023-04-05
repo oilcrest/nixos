@@ -25,6 +25,8 @@ in
   boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
     mkdir -p /mnt
 
+    btrfs subvolume delete /mnt/@
+    
     # We first mount the btrfs root to /mnt
     # so we can manipulate btrfs subvolumes.
     mount -o subvol=@ /dev/vda3 /mnt
@@ -44,17 +46,18 @@ in
     # Anyhow, deleting these subvolumes hasn't resulted
     # in any issues so far, except for fairly
     # benign-looking errors from systemd-tmpfiles.
-    btrfs subvolume list -o /mnt |
-    cut -f9 -d' ' |
-    while read subvolume; do
-      echo "deleting /$subvolume subvolume..."
-      btrfs subvolume delete "/mnt/$subvolume"
-    done &&
-    echo "deleting @root subvolume..." &&
-    btrfs subvolume delete /mnt/@
+    
+    # btrfs subvolume list -o /mnt |
+    # cut -f9 -d' ' |
+    # while read subvolume; do
+    #   echo "deleting /$subvolume subvolume..."
+    #   btrfs subvolume delete "/mnt/$subvolume"
+    # done &&
+    # echo "deleting @root subvolume..." &&
+    # btrfs subvolume delete /mnt/@
 
     echo "restoring blank @root subvolume..."
-    btrfs subvolume snapshot /mnt/@-blank /mnt/@
+    btrfs subvolume snapshot /mnt/root-blank /mnt/root
 
     # Once we're done rolling back to a blank snapshot,
     # we can unmount /mnt and continue on the boot process.

@@ -41,10 +41,13 @@
               extraArgs = [ "-f" ]; # Override existing partition
               subvolumes = {
                 "@" = {
+                  mountOptions = [ "compress=zstd" "noatime" ];
+                };
+                "@/root" = {
                   mountpoint = "/";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "@/snapshots" = {
+                "@/.snapshots" = {
                   mountpoint = "/.snapshots";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
