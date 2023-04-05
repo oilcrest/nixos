@@ -64,14 +64,14 @@
                   mountpoint = "/var/log";
                   mountOptions = [ "compress=zstd" "noatime" ];
                 };
-                "/@/srv" = {
-                  mountpoint = "/srv";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
-                "/@/tmp" = {
-                  mountpoint = "/tmp";
-                  mountOptions = [ "compress=zstd" "noatime" ];
-                };
+                # "/@/srv" = {
+                #   mountpoint = "/srv";
+                #   mountOptions = [ "compress=zstd" "noatime" ];
+                # };
+                # "/@/tmp" = {
+                #   mountpoint = "/tmp";
+                #   mountOptions = [ "compress=zstd" "noatime" ];
+                # };
                 "/@/machines" = {
                   mountpoint = "/var/lib/machines";
                   mountOptions = [ "compress=zstd" "noatime" ];
