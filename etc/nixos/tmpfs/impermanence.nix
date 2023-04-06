@@ -24,7 +24,6 @@ in
   };
 
   # filesystem modifications needed for impermanence
-  fileSystems."/persist".options = [ "compress=zstd" "noatime" ];
   fileSystems."/persist".neededForBoot = true;
   fileSystems."/var/log".neededForBoot = true;
 
@@ -32,6 +31,7 @@ in
   environment.persistence."/persist" = {
     directories = [
       "/etc/nixos"
+      "/etc/ssh"
     ];
     files = [
       "/etc/machine-id"
