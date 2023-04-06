@@ -75,6 +75,9 @@
                   #   mountpoint = "/tmp";
                   #   mountOptions = [ "compress=zstd" "noatime" ];
                   # };
+                  nodev = {
+                    "/srv2" = { };
+                  };
                   "@/machines" = {
                     mountpoint = "/var/lib/machines";
                     mountOptions = [ "compress=zstd" "noatime" ];
