@@ -209,11 +209,29 @@ function generate_config {
     mkpasswd -m sha-512 "$PASS1" > /mnt/persist/passwords/user
     echo "Password file is:"
     ls -lh /mnt/persist/passwords/user
-    
+    echo "Config generation complete!"   
+}
+
+function install_nix {
     echo
-    echo "To install the system run: "
-    echo "nixos-install"
+    read -n 1 -srp $'Would you like to install nixos now? (Y/n) ' key
     echo
+    if [ "$key" == 'n' ]; then                                                                                      
+        exit
+    else 
+        nixos-install
+    fi
+}
+
+function install_zsh {
+    echo
+    echo "Cloning ZSH config into $UNAME's home directory"
+    HOME="/mnt/home/$UNAME"
+    # nixos is user 1000
+    su -c "cd $HOME && git clone https://github.com/chewblacka/zsh.git zsh" nixos || (echo "$HOME dir not found. Exiting" && exit)
+    su -c "$HOME/zsh/.github/install.sh" nixos
+    echo "Zsh install finished!"
+    echo "Reboot to use NixOS"
 }
 
 # Make script independent of which dir it was run from
@@ -223,8 +241,8 @@ NIXDIR="$SCRIPTDIR/../etc/nixos"
 get_user_info
 build_file_system
 generate_config
-
-
+install_nix
+install_zsh
 
 
 
