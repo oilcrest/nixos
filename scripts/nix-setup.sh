@@ -229,7 +229,7 @@ function install_zsh {
     HOME="/mnt/home/$UNAME"
     # nixos is user 1000
     su -c "cd $HOME && git clone https://github.com/chewblacka/zsh.git zsh" nixos || (echo "$HOME dir not found. Exiting" && exit)
-    su -c "$HOME/zsh/.github/install.sh" nixos
+    su -c "HOME=/mnt/home/$UNAME && $HOME/zsh/.github/install.sh" nixos
     echo "Zsh install finished!"
     echo "Reboot to use NixOS"
 }
