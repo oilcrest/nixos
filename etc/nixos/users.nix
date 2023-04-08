@@ -14,6 +14,7 @@ in
     shell = pkgs.zsh;
     # This gives a default empty password
     initialHashedPassword = "";
+    # Have moved below line to impermanence.nix
     # passwordFile = "/persist/passwords/user";
     openssh.authorizedKeys.keys = [ "${mysshkey}" ];
     # Per user packages
