@@ -30,6 +30,7 @@ rec {
       neofetch
       efibootmgr
       zsh
+      sqlite
     ];
       
 
