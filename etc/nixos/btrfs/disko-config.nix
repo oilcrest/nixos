@@ -9,7 +9,6 @@
           format = "gpt";
           partitions = [
             {
-              type = "partition";
               name = "ESP";
               start = "1MiB";
               end = "1G";
@@ -23,7 +22,6 @@
             }
             {
               name = "swap";
-              type = "partition";
               start = "1G";
               end = "9G";
               part-type = "primary";
@@ -34,7 +32,6 @@
             }
             {
               name = "root";
-              type = "partition";
               start = "9G";
               end = "100%";
               content = {
@@ -48,7 +45,6 @@
                     mountpoint = "/";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  # Mountpoints inferred from subvolume name
                   "@/home" = {
                     mountpoint = "/home";
                     mountOptions = [ "compress=zstd" ];
