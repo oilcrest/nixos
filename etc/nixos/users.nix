@@ -25,7 +25,7 @@ in
   fileSystems."/home/${myuser}/Dropbox" = {
   	device = "//192.168.122.1/Dropbox/Fedora";
   	fsType = "cifs";
-  	options = [ "username=shareuser" "rw" "uid=1000" "gid=100" "x-systemd.automount" "noauto" ];
+  	options = [ "username=shareuser" "password=''" "rw" "uid=1000" "gid=100" "x-systemd.automount" "noauto" ];
   };
 
   # doas rules
