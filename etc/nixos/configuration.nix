@@ -116,18 +116,18 @@ in
   #############
 
   # Enable X11, sddm and KDE plasma.
-  services.xserver = {
-	enable=true;
-  	displayManager.sddm.enable = true;
-    # displayManager.defaultSession = "plasmawayland";
-  	desktopManager.plasma5.enable = true;
-    # displayManager.setupCommands = "xrandr --output Virtual-1 --mode 1920x1064 --rate 59.97";
-    displayManager.setupCommands = ''
-      xrandr --output Virtual-1 --mode 1920x1080 --rate 60
-      '';
-    # X11 keymap
-    layout = "gb";
-  };
+  # services.xserver = {
+	# enable=true;
+  # 	displayManager.sddm.enable = true;
+  #   # displayManager.defaultSession = "plasmawayland";
+  # 	desktopManager.plasma5.enable = true;
+  #   # displayManager.setupCommands = "xrandr --output Virtual-1 --mode 1920x1064 --rate 59.97";
+  #   displayManager.setupCommands = ''
+  #     xrandr --output Virtual-1 --mode 1920x1080 --rate 60
+  #     '';
+  #   # X11 keymap
+  #   layout = "gb";
+  # };
 
 
   #############
