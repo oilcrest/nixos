@@ -17,6 +17,7 @@ in
       ./users.nix
       ./vim.nix
       ./myparams.nix
+      ./desktop.nix
       "${disko}/module.nix"
       (import ./disko-config.nix {
         disks = [ "/dev/vda" ]; # replace this with your disk name i.e. /dev/nvme0n1
