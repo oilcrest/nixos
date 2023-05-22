@@ -3,7 +3,7 @@
 let
   # One of [ kde pantheon ]
   myDesktop = "kde";
-  desktopConfigs = {
+  desktopConfig = {
     kde = {
       services.xserver = {  
         enable = true;
@@ -23,9 +23,7 @@ let
       };
     };
   };
-  desktopConfig = desktopConfigs.${myDesktop};
 in
 {
-  config = desktopConfig;
+  config = desktopConfig.${myDesktop};
 }
-
