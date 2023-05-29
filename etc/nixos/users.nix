@@ -13,7 +13,6 @@ in
     uid = 1000;
     extraGroups = [ "wheel" "video" "audio" ];
     shell = pkgs.fish;
-    # shell = pkgs.zsh;
     # This gives a default empty password
     initialHashedPassword = "";
     # Have moved below line to impermanence.nix
