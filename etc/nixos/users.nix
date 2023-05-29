@@ -10,6 +10,7 @@ in
   # User account
   users.users.${myuser} = {
     isNormalUser = true;
+    uid = 1000;
     extraGroups = [ "wheel" "video" "audio" ];
     shell = pkgs.fish;
     # shell = pkgs.zsh;
