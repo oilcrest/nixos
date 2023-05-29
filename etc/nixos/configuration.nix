@@ -6,16 +6,13 @@
 
 let
   packageGroups = import ./packages.nix { inherit pkgs; };
-  # disko = builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz";
 in
 {
   imports =
     [
       ./hardware-configuration.nix
-      # "${disko}/module.nix"
       ./impermanence.nix
       ./users.nix
-      # ./vim.nix
       ./myparams.nix
       ./desktop.nix
       (import ./disko-config.nix {
