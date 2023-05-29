@@ -1,14 +1,15 @@
 { config, lib, pkgs, ... }:
 
 let
-  # One of [ kde pantheon ]
-  myDesktop = "kde";
+  myDesktop = "pantheon";
+  # Choose one of [ kde pantheon ]
   desktopConfig = {
     kde = {
       services.xserver = {  
         enable = true;
         displayManager.sddm.enable = true;
-        displayManager.defaultSession = "plasmawayland";
+        # displayManager.defaultSession = "plasmawayland";
+        displayManager.defaultSession = "plasma";
         desktopManager.plasma5.enable = true;
         # X11 keymap
         layout = "gb";
@@ -27,3 +28,4 @@ in
 {
   config = desktopConfig.${myDesktop};
 }
+

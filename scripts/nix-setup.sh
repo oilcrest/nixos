@@ -203,6 +203,10 @@ function generate_config {
     echo "Copying over script files"
     mkdir -p /mnt/persist/scripts
     cp "$SCRIPTDIR"/* /mnt/persist/scripts
+    
+    echo "Creating persist git path"
+    mkdir -p /mnt/persist/git
+    sudo chown 1000:users /mnt/persist/git
 
     # Write the password we entered earlier
     mkdir -p /mnt/persist/passwords

@@ -17,12 +17,21 @@ git pull > /dev/null # git pull silently
 files=(
   # Nixos directory
   etc/nixos/configuration.nix
+  etc/nixos/desktop.nix
   etc/nixos/disko-config.nix
   etc/nixos/impermanence.nix
-  etc/nixos/fs.nix
+  etc/nixos/flake.lock
+  etc/nixos/flake.nix
+  etc/nixos/impermanence.nix
   etc/nixos/packages.nix
   etc/nixos/users.nix
   etc/nixos/vim.nix
+  # btrfs directory
+  etc/nixos/btrfs/disko-config.nix
+  etc/nixos/btrfs/impermanence.nix
+  # tmpfs directory
+  etc/nixos/tmpfs/disko-config.nix
+  etc/nixos/tmpfs/impermanence.nix
   # Scripts directory
   scripts/changepass.sh
   scripts/cruft.sh

@@ -1,6 +1,6 @@
 # This is my users file
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 let 
   # Read params file for username
   myuser = config.myParams.myusername;
@@ -11,7 +11,8 @@ in
   users.users.${myuser} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" "audio" ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
+    # shell = pkgs.zsh;
     # This gives a default empty password
     initialHashedPassword = "";
     # Have moved below line to impermanence.nix

@@ -6,7 +6,7 @@
 
 let
   packageGroups = import ./packages.nix { inherit pkgs; };
-  disko = builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz";
+  # disko = builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz";
 in
 {
   imports =
@@ -15,19 +15,18 @@ in
       # "${disko}/module.nix"
       ./impermanence.nix
       ./users.nix
-      ./vim.nix
+      # ./vim.nix
       ./myparams.nix
       ./desktop.nix
-      "${disko}/module.nix"
       (import ./disko-config.nix {
-        disks = [ "/dev/vda" ]; # replace this with your disk name i.e. /dev/nvme0n1
+        disks = [ "/dev/vda" ]; 
       })
     ];
 
 
-#   disko.devices = import ./disko-config.nix {
-#     disks = [ "/dev/vda" ]; 
-#   };
+  # disko.devices = import ./disko-config.nix {
+  #   disks = [ "/dev/vda" ]; 
+  # };
 
   nixpkgs.config = {
     allowUnfree = true;
@@ -37,6 +36,7 @@ in
     #  };
     # };
   };
+
 
   systemd.user.services.spice-agent = {
     enable = true;
@@ -51,7 +51,6 @@ in
 
 
   # https://nixos.wiki/wiki/Storage_optimization
-  # nix.autoOptimiseStore = true;
   nix.settings.auto-optimise-store = true;
   # Garbage Collection 
   nix.gc = {
@@ -84,6 +83,17 @@ in
     timeout = 3;
   };
 
+  # boot.loader = {
+  #   efi.canTouchEfiVariables=true;
+  #   grub = {
+  #     enable = true;
+  #     efiSupport = true;
+  #     devices = [ "nodev" ];
+  #     gfxmodeEfi = "1920x1080";
+  #     font = "${pkgs.hack-font}/share/fonts/hack/Hack-Regular.ttf";
+  #     fontSize = 24;
+  #   };
+  # };
 
 
   time.timeZone = "Europe/London";
@@ -114,20 +124,9 @@ in
   #############
   ## Desktop ##
   #############
-
-  # Enable X11, sddm and KDE plasma.
-  # services.xserver = {
-	# enable=true;
-  # 	displayManager.sddm.enable = true;
-  #   # displayManager.defaultSession = "plasmawayland";
-  # 	desktopManager.plasma5.enable = true;
-  #   # displayManager.setupCommands = "xrandr --output Virtual-1 --mode 1920x1064 --rate 59.97";
-  #   displayManager.setupCommands = ''
-  #     xrandr --output Virtual-1 --mode 1920x1080 --rate 60
-  #     '';
-  #   # X11 keymap
-  #   layout = "gb";
-  # };
+  
+  # Define the deskto from one of [ "kde" "pantheon" ]. Default is kde.
+  # myDesktop = "pantheon";
 
 
   #############
@@ -145,12 +144,12 @@ in
   ################
 
   ### OpenGL ###
-  # hardware.opengl = {
-  #   enable = true;
-  #   driSupport = true;
-  #   driSupport32Bit = true;
-  #   extraPackages = [ pkgs.libGL pkgs.libGLU ];
-  # };
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+    extraPackages = [ pkgs.libGL pkgs.libGLU ];
+  };
 
 
   ################
@@ -168,7 +167,8 @@ in
   security.sudo.enable = true;
 
   # Mount /tmp as tmpfs
-  boot.tmpOnTmpfs = true;
+  # boot.tmpOnTmpfs = true;
+  boot.tmp.useTmpfs = true;
   
   # Clean-out /var/tmp for files older than 7 days. 
   # systemd.tmpfiles.rules = [ "q /var/tmp 1777 root root 7d" ];
@@ -181,15 +181,16 @@ in
   ################
 
   # Set neovim as the default editor
-  environment.variables.EDITOR = "nvim";
+  environment.variables.EDITOR = "hx";
 
-  programs.zsh.enable = true;
+  # programs.zsh.enable = true;
+  programs.fish.enable = true;
 
-  environment.sessionVariables = rec {
-    PATH = [ 
-      "/persist/scripts"
-    ];
-  };
+  # environment.sessionVariables = rec {
+  #   PATH = [ 
+  #     "/persist/scripts"
+  #   ];
+  # };
 
   # environment.shellAliases = {
   #   vim = "nvim";
@@ -240,17 +241,17 @@ in
   ############
  
   ### Sound ###
-  # https://nixos.wiki/wiki/PipeWire
-  # rtkit is optional but recommended
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  # Uncomment to use JACK applications:
-  # jack.enable = true;
-  };
+  ## https://nixos.wiki/wiki/PipeWire
+  ## rtkit is optional but recommended
+  # security.rtkit.enable = true;
+  # services.pipewire = {
+  #   enable = true;
+  #   alsa.enable = true;
+  #   alsa.support32Bit = true;
+  #   pulse.enable = true;
+  # ## Uncomment to use JACK applications:
+  # # jack.enable = true;
+  # };
 
 
   ### Flatpak ###
@@ -275,20 +276,33 @@ in
   services.spice-vdagentd.enable = true;
 
   ### Podman ###
-  virtualisation = {
-    podman = {
-      enable = true;
-      # docker alias for podman
-      dockerCompat = true;
-    };
+  # virtualisation = {
+  #   podman = {
+  #     enable = true;
+  #     # docker alias for podman
+  #     dockerCompat = true;
+  #   };
+  # };
+
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings = { dns_enabled = true; };
   };
+  security.unprivilegedUsernsClone = true;
+
+  virtualisation = {
+    lxd.enable = true;
+  };
+
 
   ### SSH ###
   services.openssh = {
    enable = true;
-   passwordAuthentication = false;
+   # passwordAuthentication = false;
+   settings.PasswordAuthentication = false;
    allowSFTP = false; # Don't set this if you need sftp
-   kbdInteractiveAuthentication = false;
+   settings.KbdInteractiveAuthentication = false;
    extraConfig = ''
      AllowTcpForwarding yes
      X11Forwarding no
@@ -299,7 +313,7 @@ in
   };
 
 
-  system.copySystemConfiguration = true;
+  # system.copySystemConfiguration = true;
 
   # Read the doc before updating
   system.stateVersion = "22.11";

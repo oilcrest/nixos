@@ -2,8 +2,20 @@
 # [ "$(id -u)" != 0 ] && exec sudo "$0"
 # set -euo pipefail
 
-echo "Script to pull in the latest configuration.nix from github"
-cd /persist/git
+echo "Script to pull in my nixos config files from github"
+
+if [ ! -d "/persist/git/nixos" ]; then
+  echo "git repo doesn't exist."
+  echo "Cloning on first run ..."
+  mkdir -p /persist/git || exit
+  pushd /persist || exit
+  git clone https://github.com/chewblacka/nixos git
+  echo "Done!"
+  exit
+fi
+
+
+cd /persist/git || exit
 git pull
 CONDIR="/persist/etc/nixos/"
 GITDIR="/persist/git/nixos/"

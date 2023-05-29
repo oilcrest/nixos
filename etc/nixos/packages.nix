@@ -10,10 +10,23 @@
 #in 
 rec {
 
+  testing = [
+      get_iplayer
+      mcfly
+      helix # vim-like text editor
+      nil # nix language server
+      nodePackages.bash-language-server
+      # antigen
+      # zplug
+      # fish
+      cool-retro-term
+      glxinfo
+    ];
+
   my-package-set = builtins.concatLists [
       install
-      #testing
-      #cli
+      testing
+      cli
       #utils
       #gui
       #misc
@@ -34,18 +47,27 @@ rec {
     ];
       
 
-  testing = [
+  # testing = [
       # nix-software-center
       # ruby
-      trickle # network bandwidth limiter
-      keyd # Key remapping daemon
+      # crun
+      # audacity
+      # gramps
+      # audacious
+      # antigen
+      # fish
+      # cool-retro-term
+      # glxinfo
+      # salt
+      # trickle # network bandwidth limiter
+      # keyd # Key remapping daemon
       # youtube-dl
       # yt-dlp
       # obsidian
       # brave
       #sl
       #pkg-config
-    ];
+    # ];
   
   cli = [
       shellcheck

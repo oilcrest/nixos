@@ -2,14 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, impermanence, ... }:
 
 let
-  impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   myuser = config.myParams.myusername;
 in
 {
-  imports = [ "${impermanence}/nixos.nix" ];
+  imports = [ impermanence.nixosModule ];
 
     users.users.${myuser} = {
       passwordFile = "/persist/passwords/user";
@@ -47,7 +46,7 @@ in
     Defaults lecture = never
   '';
 
-  environment.sessionVariables = rec {
+  environment.sessionVariables = {
     PATH = [ 
       "/persist/scripts"
     ];
