@@ -41,11 +41,12 @@ files=(
 
 for f in "${files[@]}"
 do
-  A="$CONDIR/$f"
-  B="$GITDIR/$f"
+  A="$GITDIR/$f"
+  B="$CONDIR/$f"
 
   if [[ "$(diff $A $B)" ]]; then
     clear
+    # diff oldfile newfile
     diff --color $A $B 
     echo
     echo "File $f differs" 
@@ -53,8 +54,8 @@ do
     read -n 1 -srp $'Do you wish to push to git directory(y/N)? ' key
     echo
     if [ "$key" == 'y' ]; then
-      cp $A $B
-      chown 1000:users $B
+      cp $B $A
+      chown 1000:users $A
     fi
   fi
 done
