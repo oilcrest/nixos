@@ -10,7 +10,6 @@ with lib;
       description = "Desktop Environment to use";
     };
   };
-  # config = desktopConfig.${myDesktop};
   config = mkMerge [
   (mkIf (config.myDesktop == "kde") { 
     services.xserver = {  

@@ -1,9 +1,5 @@
 # configuration.nix
 
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
@@ -19,8 +15,8 @@
       })
     ];
 
+  # Set your desktop here:
   myDesktop = "pantheon";
-  # Default desktop
   # myDesktop = config.myParams.mydesktop;
   
   nixpkgs.config = {
@@ -72,17 +68,6 @@
     timeout = 3;
   };
 
-  # boot.loader = {
-  #   efi.canTouchEfiVariables=true;
-  #   grub = {
-  #     enable = true;
-  #     efiSupport = true;
-  #     devices = [ "nodev" ];
-  #     gfxmodeEfi = "1920x1080";
-  #     font = "${pkgs.hack-font}/share/fonts/hack/Hack-Regular.ttf";
-  #     fontSize = 24;
-  #   };
-  # };
 
 
   time.timeZone = "Europe/London";
@@ -109,13 +94,6 @@
     allowedUDPPorts = [ ];
   };
 
-
-  #############
-  ## Desktop ##
-  #############
-  
-  # Define the deskto from one of [ "kde" "pantheon" ]. Default is kde.
-  # myDesktop = "pantheon";
 
 
   #############
@@ -156,7 +134,6 @@
   security.sudo.enable = true;
 
   # Mount /tmp as tmpfs
-  # boot.tmpOnTmpfs = true;
   boot.tmp.useTmpfs = true;
   
   # Clean-out /var/tmp for files older than 7 days. 
@@ -169,37 +146,16 @@
   ### Programs ###
   ################
 
-  # Set neovim as the default editor
+  # Set default editor
   environment.variables.EDITOR = "hx";
 
   # programs.zsh.enable = true;
   programs.fish.enable = true;
 
-  # environment.sessionVariables = rec {
-  #   PATH = [ 
-  #     "/persist/scripts"
-  #   ];
-  # };
-
-  # environment.shellAliases = {
-  #   vim = "nvim";
-  # };
-
-  # programs.chromium = {
-  #   enable = true;
-  #   homepageLocation = "https://nixos.org"; 
-  #   extensions =
-  #   [
-  #   "gcbommkclmclpchllfjekcdonpmejbdp" # https everywhere
-  #   "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
-  #   ];	
-  # };
-
-  
   # System Packages to install
   environment.systemPackages = with import ./packages.nix {inherit pkgs config; }; my-package-set;
 
-  # Install specific Nerd fonts 
+  # Install Nerd fonts 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Hack" ]; })
   ];
@@ -265,24 +221,24 @@
   services.spice-vdagentd.enable = true;
 
   ### Podman ###
-  # virtualisation = {
-  #   podman = {
-  #     enable = true;
-  #     # docker alias for podman
-  #     dockerCompat = true;
-  #   };
-  # };
-
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true;
-    defaultNetwork.settings = { dns_enabled = true; };
-  };
-  security.unprivilegedUsernsClone = true;
-
   virtualisation = {
-    lxd.enable = true;
+    podman = {
+      enable = true;
+      # docker alias for podman
+      dockerCompat = true;
+    };
   };
+
+  # virtualisation.podman = {
+  #   enable = true;
+  #   dockerCompat = true;
+  #   defaultNetwork.settings = { dns_enabled = true; };
+  # };
+  # security.unprivilegedUsernsClone = true;
+
+  # virtualisation = {
+  #   lxd.enable = true;
+  # };
 
 
   ### SSH ###
@@ -305,7 +261,7 @@
   # system.copySystemConfiguration = true;
 
   # Read the doc before updating
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 
 }
 
