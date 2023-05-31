@@ -19,13 +19,13 @@
   myDesktop = "pantheon";
   # myDesktop = config.myParams.mydesktop;
 
-
   
   # Nix options
+  # Allow unfree packages
   nixpkgs.config = {
     allowUnfree = true;
   };
-
+  # Enable flakes & new syntax
   nix = {
     extraOptions = ''
       experimental-features = nix-command
@@ -50,9 +50,7 @@
   ####################
   ##  Localization  ##
   ####################
-
   time.timeZone = "Europe/London";
-
   # Internationalisation
   i18n.defaultLocale = "en_GB.UTF-8";
   console = {
@@ -64,11 +62,10 @@
   ################
   ##  Network  ###
   ################
-  # networking.hostName = "nixos";
   networking.hostName = config.myParams.myhostname;
   networking.networkmanager.enable = true;
 
-  # Open ports in the firewall.
+  # Open ports in firewall.
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 22 ];
@@ -230,7 +227,7 @@
       Unit = "flatpak-update.service";
     };
   };
-  # XDG portals for sandboxed apps to work:
+  # XDG portals for sandboxed apps
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
 
@@ -271,8 +268,6 @@
    '';
   };
 
-
-  # system.copySystemConfiguration = true;
 
   # Read the doc before updating
   system.stateVersion = "23.05";
