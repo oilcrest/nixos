@@ -149,6 +149,7 @@
   # Set default editor
   environment.variables.EDITOR = "hx";
 
+  # Shell
   # programs.zsh.enable = true;
   programs.fish.enable = true;
 

@@ -1,6 +1,9 @@
 # desktop.nix
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
+# Current desktops supported:
+# kde pantheon
+# Set desktop in configuration.nix
 with lib;
 {
   options = {  
