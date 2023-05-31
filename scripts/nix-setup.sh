@@ -84,7 +84,7 @@ function get_user_info {
       DESKTOP=$DEFAULT_DESKTOP
     fi
 
-    # 4. SSH Key
+    # 5. SSH Key
     echo
     echo
     echo "Now lets set the SSH key"
@@ -104,6 +104,8 @@ function get_user_info {
     sed -i "s#myusername = \".*\";#myusername = \"${UNAME}\";#" "$NIXDIR/myparams.nix"
     # Write out the hostname 
     sed -i "s#myhostname = \".*\";#myhostname = \"${HOST}\";#" "$NIXDIR/myparams.nix"
+    # Write out the desktop 
+    sed -i "s#mydesktop = \".*\";#mydesktop = \"${DESKTOP}\";#" "$NIXDIR/myparams.nix"
     # Write out the ssh-key 
     sed -i "s#mysshkey = \".*\";#mysshkey = \"${SSHKEY}\";#" "$NIXDIR/myparams.nix"
 }
