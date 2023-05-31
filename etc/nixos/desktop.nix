@@ -1,15 +1,13 @@
 # desktop.nix
 { config, lib, pkgs, ... }:
 
-  # myDesktop = config.myParams.mydesktop;
-  # Choose one of [ kde pantheon ]
 with lib;
 {
   options = {  
     myDesktop = mkOption {
       type = types.str;
       default = "kde";
-      description = "Which desktop to use?";
+      description = "Desktop Environment to use";
     };
   };
   # config = desktopConfig.${myDesktop};
