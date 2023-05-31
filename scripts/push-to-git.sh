@@ -25,7 +25,6 @@ files=(
   etc/nixos/impermanence.nix
   etc/nixos/packages.nix
   etc/nixos/users.nix
-  etc/nixos/vim.nix
   # btrfs directory
   etc/nixos/btrfs/disko-config.nix
   etc/nixos/btrfs/impermanence.nix
