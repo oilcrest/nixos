@@ -15,33 +15,15 @@
       })
     ];
 
-  # Set your desktop here:
+  # Set desktop here:
   myDesktop = "pantheon";
   # myDesktop = config.myParams.mydesktop;
+
+
   
+  # Nix options
   nixpkgs.config = {
     allowUnfree = true;
-  };
-
-  systemd.user.services.spice-agent = {
-    enable = true;
-    wantedBy = ["graphical-session.target"]; 
-    serviceConfig = { ExecStart = "${pkgs.spice-vdagent}/bin/spice-vdagent -x"; }; 
-    unitConfig = { ConditionVirtualization = "vm"; 
-      Description = "Spice guest session agent";
-      After = ["graphical-session-pre.target"];
-      PartOf = ["graphical-session.target"]; 
-    }; 
-  }; 
-
-
-  # https://nixos.wiki/wiki/Storage_optimization
-  nix.settings.auto-optimise-store = true;
-  # Garbage Collection 
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 3d";
   };
 
   nix = {
@@ -51,10 +33,6 @@
     '';
   };
 
-  security.sudo.extraConfig = ''
-    # rollback results in sudo lectures after each reboot
-    Defaults lecture = never
-  '';
 
   # Boot loader
   boot.loader = {
@@ -69,6 +47,9 @@
   };
 
 
+  ####################
+  ##  Localization  ##
+  ####################
 
   time.timeZone = "Europe/London";
 
@@ -99,7 +80,6 @@
   #############
   ## Kernel ###
   #############
-
   # Custom Kernels
   # boot.kernelPackages = pkgs.linuxPackages_zen;
   # boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -118,6 +98,20 @@
     extraPackages = [ pkgs.libGL pkgs.libGLU ];
   };
 
+  ### Spice ###
+  systemd.user.services.spice-agent = {
+    enable = true;
+    wantedBy = ["graphical-session.target"]; 
+    serviceConfig = { ExecStart = "${pkgs.spice-vdagent}/bin/spice-vdagent -x"; }; 
+    unitConfig = { ConditionVirtualization = "vm"; 
+      Description = "Spice guest session agent";
+      After = ["graphical-session-pre.target"];
+      PartOf = ["graphical-session.target"]; 
+    }; 
+  }; 
+
+  services.spice-vdagentd.enable = true;
+
 
   ################
   ### Security ###
@@ -133,12 +127,32 @@
   security.doas.enable = true;
   security.sudo.enable = true;
 
+  security.sudo.extraConfig = ''
+    # rollback results in sudo lectures after each reboot
+    Defaults lecture = never
+  '';
+
+
+  ################
+  ### Clean-Up ###
+  ################
+
   # Mount /tmp as tmpfs
   boot.tmp.useTmpfs = true;
   
   # Clean-out /var/tmp for files older than 7 days. 
+  # Is this still needed?
   # systemd.tmpfiles.rules = [ "q /var/tmp 1777 root root 7d" ];
   # systemd.tmpfiles.rules = [ "d /var/tmp 1777 root root 7d" ];
+
+  # https://nixos.wiki/wiki/Storage_optimization
+  nix.settings.auto-optimise-store = true;
+  # Garbage Collection 
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 3d";
+  };
 
 
 
@@ -153,10 +167,10 @@
   # programs.zsh.enable = true;
   programs.fish.enable = true;
 
-  # System Packages to install
+  # System Packages
   environment.systemPackages = with import ./packages.nix {inherit pkgs config; }; my-package-set;
 
-  # Install Nerd fonts 
+  # Nerd fonts 
   fonts.fonts = with pkgs; [
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Hack" ]; })
   ];
@@ -182,6 +196,7 @@
   # };
 
 
+
   ############
   # Services #
   ############
@@ -198,7 +213,6 @@
   # ## Uncomment to use JACK applications:
   # # jack.enable = true;
   # };
-
 
   ### Flatpak ###
   services.flatpak.enable = true;
@@ -219,7 +233,6 @@
   # XDG portals for sandboxed apps to work:
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-  services.spice-vdagentd.enable = true;
 
   ### Podman ###
   virtualisation = {

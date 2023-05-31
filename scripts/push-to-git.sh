@@ -46,7 +46,7 @@ do
 
   if [[ "$(diff $A $B)" ]]; then
     clear
-    diff $A $B 
+    diff --color $A $B 
     echo
     echo "File $f differs" 
     echo "The diff is as above."
