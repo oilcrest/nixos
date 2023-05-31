@@ -1,3 +1,5 @@
+# btrfs/disko-config.nix
+
 { disks ? [ "/dev/vda" ], ... }: {
   disko.devices = {
     disk = {
