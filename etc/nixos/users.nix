@@ -1,4 +1,4 @@
-# This is my users file
+# users.nix
 
 { config, pkgs, ... }:
 let 

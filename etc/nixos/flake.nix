@@ -1,8 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
+    disko = { url = "github:nix-community/disko";
+              inputs.nixpkgs.follows = "nixpkgs"; };
     impermanence.url = "github:nix-community/impermanence";
   };
   outputs = { nixpkgs, disko, ... } @inputs: {

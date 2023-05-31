@@ -1,125 +1,118 @@
-# This :qwis the packages.nix file
-{ pkgs, ... }: with pkgs;
-#let
-#  nix-software-center = (import (pkgs.fetchFromGitHub {
-#    owner = "vlinkz";
-#    repo = "nix-software-center";
-#    rev = "0.1.0";
-#    sha256 = "d4LAIaiCU91LAXfgPCWOUr2JBkHj6n0JQ25EqRIBtBM=";
-#  })) {};
-#in 
+# packages.nix
+{ config, pkgs, ... }: with pkgs;
+
 rec {
 
-  testing = [
-      get_iplayer
-      mcfly
-      helix # vim-like text editor
-      nil # nix language server
-      nodePackages.bash-language-server
-      # antigen
-      # zplug
-      # fish
-      cool-retro-term
-      glxinfo
-    ];
+# Packages I'm currentl testing out
+# Once accepted place in another list
+_testing = [
+    obsidian
+    get_iplayer
+    cool-retro-term
+    glxinfo        
+];
 
-  my-package-set = builtins.concatLists [
-      install
-      testing
-      cli
-      #utils
-      #gui
-      #misc
-      #kde
-    ];
+# Package set names must differ from packages
+# Otherwise recursion nastiness
+my-package-set = builtins.concatLists [
+    _testing
+    _helix # Packages relating to helix
+    _shell 
+    _cli
+    # security
+    # gui
+    # browsers
+    _misc
+    _kde # kde-specific packages
+    _scripting
+    # install
+]; 
 
-  # Base packages I want on initial install
-  install = [
-      direnv
-      wget
-      git
-      unzip
-      trash-cli
-      neofetch
-      efibootmgr
-      zsh
-      sqlite
-    ];
-      
 
-  # testing = [
-      # nix-software-center
-      # ruby
-      # crun
-      # audacity
-      # gramps
-      # audacious
-      # antigen
-      # fish
-      # cool-retro-term
-      # glxinfo
-      # salt
-      # trickle # network bandwidth limiter
-      # keyd # Key remapping daemon
-      # youtube-dl
-      # yt-dlp
-      # obsidian
-      # brave
-      #sl
-      #pkg-config
-    # ];
-  
-  cli = [
-      shellcheck
-      direnv
-      pv # progress viewer
-      desktop-file-utils
-      gettext
-      wget
-      git
-      unzip
-      # appimage-run
-      trash-cli
-      neofetch
-      firejail
-      efibootmgr
-      zsh
-      # distrobox
-      xorg.xhost
-      #spice-vdagent
-      x11spice
-    ];
-      
-  utils = [
-      nix-prefetch-docker # Used to get hash info for building docker images with nix
-      #unstable.lynis # Security auditing tool
-    ];
+_helix = [
+    helix
+    nil # nix lsp
+    nodePackages.bash-language-server # bash lsp
+];
 
-  gui = [
-      gparted
-      glxinfo #=glxgears
-      filelight 
-      firefox
-      librewolf
-      # ungoogled-chromium
-      # logseq
-      #signal-desktop
-      #latte-dock
-    ];
+_shell = [
+    zsh # Is this needed?
+    mcfly # cross-shell command line history    
+];
 
-  misc = [
-      gnome-icon-theme
-      #nuspell
-      hunspell
-      hunspellDicts.en-gb-ize
-    ];
+_cli = [
+    # shellcheck # is this still needed?
+    direnv
+    pv # progress viewer
+    wget
+    git
+    unzip
+    # appimage-run
+    trash-cli
+    neofetch
+    efibootmgr # for managing efi
+    zsh
+    # distrobox
+    
+    # Are these needed?
+    # xorg.xhost
+    # spice-vdagent
+    # x11spice
+];
 
-  kde = [
-      discover
-      # libsForQt5.kinfocenter # Info Centre
-      libsForQt5.kdialog # QT Dialog boxes for shell scripts
-      kate
-  ];
+_security = [
+    firejail
+    lynis # security auditing tool
+];
+
+_gui = [
+    gparted # disk formatting
+    glxinfo # =glxgears
+    filelight # disk usage
+    logseq
+    # signal-desktop
+];
+
+_browsers = [
+    firefox
+    librewolf # hardened ff
+    # unboogled-chromium
+];
+
+_misc = [
+    gnome-icon-theme
+    hunspell
+    hunspellDicts.en-gb-ize
+];
+
+# Only include these if desktop is kde
+_kde = (if (config.myDesktop == "kde") then
+[
+    discover
+    # packagekit
+    # libsForQt5.packagekit-qt
+    # libsForQt5.kinfocenter # Info center
+    # latte-dock
+] else [ ]);
+
+_scripting = [
+    libsForQt5.kdialog # QT Dialog boxes for shell scripts
+    nix-prefetch-docker # used to get hash info for building docker images with nix
+    desktop-file-utils # set of cli tools for .desktop files
+    # gettext # what is this?
+];
+
+# A minimal set of packages for install
+_install = [
+    direnv
+    wget
+    git
+    unzip
+    trash-cli
+    neofetch
+    efibootmgr # for managing efi
+    zsh
+    sqlite # needed for histdb    
+];
 
 }
-

@@ -55,6 +55,35 @@ function get_user_info {
     fi
 
 
+    # 4. Desktop
+    echo
+    echo
+    echo "Now choose the Desktop to boot into from:"
+    echo "kde pantheon"
+    DEFAULT_DESKTOP=$(grep -oP 'mydesktop =.*?"\K[^"]*' "$NIXDIR/myparams.nix")
+    echo "Default Desktop is: $DEFAULT_DESKTOP"
+    read -n 1 -srp $'Is this ok? (Y/n) ' key
+    echo
+    if [ "$key" == 'n' ]; then
+      select DESKTOP in kde pantheon; do
+          case $DESKTOP in
+            kde)
+              break
+              ;;
+            pantheon)
+              break
+              ;;
+            *) 
+              echo "Invalid option $DESKTOP"
+              ;;
+          esac
+      done
+      echo "The New Desktop is: $DESKTOP"  
+      prompt
+    else
+      DESKTOP=$DEFAULT_DESKTOP
+    fi
+
     # 4. SSH Key
     echo
     echo

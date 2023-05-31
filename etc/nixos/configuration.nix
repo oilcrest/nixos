@@ -1,12 +1,11 @@
+# configuration.nix
+
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
-let
-  packageGroups = import ./packages.nix { inherit pkgs; };
-in
 {
   imports =
     [
@@ -20,20 +19,13 @@ in
       })
     ];
 
-
-  # disko.devices = import ./disko-config.nix {
-  #   disks = [ "/dev/vda" ]; 
-  # };
-
+  myDesktop = "pantheon";
+  # Default desktop
+  # myDesktop = config.myParams.mydesktop;
+  
   nixpkgs.config = {
     allowUnfree = true;
-    # packageOverrides = pkgs: {
-    #  unstable = import <nixos-unstable> {
-    #    config = config.nixpkgs.config;
-    #  };
-    # };
   };
-
 
   systemd.user.services.spice-agent = {
     enable = true;
@@ -205,7 +197,7 @@ in
 
   
   # System Packages to install
-  environment.systemPackages = with packageGroups; my-package-set;
+  environment.systemPackages = with import ./packages.nix {inherit pkgs config; }; my-package-set;
 
   # Install specific Nerd fonts 
   fonts.fonts = with pkgs; [
