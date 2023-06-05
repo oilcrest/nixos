@@ -7,6 +7,8 @@ rec {
 # Once accepted place in another list
 _testing = [
     obsidian
+    # unstable.obsidian
+    exa
     get_iplayer
     cool-retro-term
     glxinfo        
@@ -23,7 +25,7 @@ my-package-set = builtins.concatLists [
     # gui
     # browsers
     _misc
-    _kde # kde-specific packages
+    _DE # DE specific packages
     _scripting
     # install
 ]; 
@@ -85,15 +87,21 @@ _misc = [
     hunspellDicts.en-gb-ize
 ];
 
-# Only include these if desktop is kde
-_kde = (if (config.myDesktop == "kde") then
+# Desktop Specific packages
+_DE = (
+if (config.myDesktop == "kde") then
 [
     discover
     # packagekit
     # libsForQt5.packagekit-qt
     # libsForQt5.kinfocenter # Info center
     # latte-dock
-] else [ ]);
+] 
+else if (config.myDesktop == "pantheon") then
+[
+    gsettings-desktop-schemas
+]
+else [ ]);
 
 _scripting = [
     libsForQt5.kdialog # QT Dialog boxes for shell scripts

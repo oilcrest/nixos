@@ -1,5 +1,5 @@
 # desktop.nix
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 # Current desktops supported:
 # kde pantheon
@@ -21,17 +21,28 @@ with lib;
       # displayManager.defaultSession = "plasmawayland";
       displayManager.defaultSession = "plasma";
       desktopManager.plasma5.enable = true;
-      # X11 keymap
-      layout = "gb";
     };
   })
   (mkIf (config.myDesktop == "pantheon") { 
     services.xserver = {
       enable = true;
-      desktopManager.pantheon.enable = true;
-      # X11 keymap
-      layout = "gb";
+      desktopManager.pantheon = {
+        enable = true;
+        extraGSettingsOverrides = ''
+        [io.elementary.terminal.settings] 
+        font='Hack Nerd Font Mono 10'
+        follow-last-tab=true
+        '';
+        extraGSettingsOverridePackages = [
+          pkgs.pantheon.elementary-terminal 
+        ];
+      };
     };
+    programs.pantheon-tweaks.enable = true;
+  })
+  ({
+    # X11 keymap
+    services.xserver.layout = "gb";
   })
   ];
 }
