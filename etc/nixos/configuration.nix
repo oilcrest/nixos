@@ -15,7 +15,7 @@
       })
     ];
 
-  # Set desktop here:
+  # Override initial desktop here:
   myDesktop = "pantheon";
   # myDesktop = config.myParams.mydesktop;
 

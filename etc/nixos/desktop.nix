@@ -40,6 +40,7 @@ with lib;
     };
     programs.pantheon-tweaks.enable = true;
   })
+  # Common desktop config settings go below
   ({
     # X11 keymap
     services.xserver.layout = "gb";
