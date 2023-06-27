@@ -6,7 +6,7 @@ let
   myuser = config.myParams.myusername;
 in
 {
-  imports = [ impermanence.nixosModule ];
+  # imports = [ impermanence.nixosModule ];
 
     users.users.${myuser} = {
       passwordFile = "/persist/passwords/user";

@@ -1,20 +1,34 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-23.05";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     disko = { url = "github:nix-community/disko";
               inputs.nixpkgs.follows = "nixpkgs"; };
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence.url ="github:nix-community/impermanence";
   };
-  outputs = { nixpkgs, disko, ... } @inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem rec {
-      pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; };};
+  
+  outputs = { self, nixpkgs, nixpkgs-unstable, disko, impermanence }@inputs: 
+    let
       system = "x86_64-linux";
-      specialArgs = inputs; # forward inputs to modules
-      modules = [ ./configuration.nix
-                  # This fixes nixpkgs (for e.g. "nix shell") to match the system nixpkgs
-                  ({ config, pkgs, options, ... }: { nix.registry.nixpkgs.flake = nixpkgs; })
-                  disko.nixosModules.disko
-                ];
+      overlay-unstable = final: prev: {
+        unstable = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      };
+      # pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; };};
+    in 
+  {
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      inherit system; 
+      #specialArgs = inputs; # forward inputs to modules
+      modules = [
+          # Overlays-module makes "pkgs.unstable" available in configuration.nix
+          ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+          ./configuration.nix
+          disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
+      ];
     };
   };
 }

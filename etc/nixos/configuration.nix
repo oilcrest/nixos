@@ -1,6 +1,6 @@
 # configuration.nix
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -17,6 +17,7 @@
 
   # Override initial desktop here:
   myDesktop = "pantheon";
+  # myDesktop = "kde";
   # myDesktop = config.myParams.mydesktop;
 
   
@@ -86,14 +87,21 @@
   ################
   ### Drivers ####
   ################
+  
+  services.xserver.videoDrivers = [ "amdgpu" "radeon" "modesetting" "fbdev" ];
+  boot.initrd.kernelModules = [ "radeon" ];
+  # boot.kernelParams = [
+  #   "video=HDMI-A-1:1920x1200@60"
+  #   "video=VIRTUAL-1:1920x1100@60"
+  # ];
 
   ### OpenGL ###
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    extraPackages = [ pkgs.libGL pkgs.libGLU ];
-  };
+  # hardware.opengl = {
+  #   enable = true;
+  #   driSupport = true;
+  #   driSupport32Bit = true;
+  #   extraPackages = [ pkgs.libGL pkgs.libGLU ];
+  # };
 
   ### Spice ###
   systemd.user.services.spice-agent = {
@@ -108,6 +116,10 @@
   }; 
 
   services.spice-vdagentd.enable = true;
+
+  # Maybe needed for gpu passthrough as guest
+  # https://old.reddit.com/r/NixOS/comments/14cjbnr/gpu_passthrough_wont_work_in_nixos_guest/
+  hardware.enableRedistributableFirmware = lib.mkDefault true;
 
 
   ################

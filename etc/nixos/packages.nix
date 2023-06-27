@@ -6,8 +6,7 @@ rec {
 # Packages I'm currentl testing out
 # Once accepted place in another list
 _testing = [
-    obsidian
-    # unstable.obsidian
+    unstable.obsidian
     exa
     get_iplayer
     cool-retro-term
