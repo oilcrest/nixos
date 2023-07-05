@@ -89,12 +89,14 @@
   ################
   
   services.xserver.videoDrivers = [ "amdgpu" "radeon" "modesetting" "fbdev" ];
-  boot.initrd.kernelModules = [ "radeon" ];
-  # boot.kernelParams = [
-  #   "video=HDMI-A-1:1920x1200@60"
-  #   "video=VIRTUAL-1:1920x1100@60"
-  # ];
-
+  # boot.initrd.kernelModules = [ "radeon" ];
+  boot.kernelParams = [
+    "video=HDMI-A-1:1920x1200@60"
+    "video=VIRTUAL-1:1920x1092@60"
+  ];
+  # services.xserver.displayManager.setupCommands = '' 
+  # xrandr --mode 1920x1092 --rate 60 
+  # '';
   ### OpenGL ###
   # hardware.opengl = {
   #   enable = true;

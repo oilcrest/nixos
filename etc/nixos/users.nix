@@ -35,5 +35,6 @@ in
     { users = [ "${myuser}" ]; keepEnv = true; persist = true; }
     { users = [ "${myuser}" ]; keepEnv = true; noPass = true; cmd = "nixos-rebuild"; args = [ "boot" "--flake" "/etc/nixos" ]; }
     { users = [ "${myuser}" ]; keepEnv = true; noPass = true; cmd = "nixos-rebuild"; args = [ "switch" "--flake" "/etc/nixos" ]; }
+    { users = [ "${myuser}" ]; keepEnv = true; noPass = true; cmd = "reboot"; }
   ];
 }
