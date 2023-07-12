@@ -82,6 +82,7 @@ _browsers = [
 
 _misc = [
     gnome-icon-theme
+    aspell
     aspellDicts.en
     # hunspell
     # hunspellDicts.en-gb-ize
@@ -93,8 +94,6 @@ if (config.myDesktop == "kde") then
 [
     discover
     libsForQt5.kate
-    # libsForQt5.sonnet
-    # libsForQt5.kdoctools
     # packagekit
     # libsForQt5.packagekit-qt
     # libsForQt5.kinfocenter # Info center

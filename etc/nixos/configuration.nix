@@ -1,6 +1,6 @@
 # configuration.nix
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports =
@@ -15,13 +15,17 @@
       })
     ];
 
-  # Override initial desktop here:
+  # Desktop
   myDesktop = "pantheon";
   # myDesktop = "kde";
+  # This is the initial desktop as defined by install script
   # myDesktop = config.myParams.mydesktop;
 
   
-  # Nix options
+  ### Nix options
+  ###############
+  # Re-use nixpkgs from flake for nix commands
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
   # Allow unfree packages
   nixpkgs.config = {
     allowUnfree = true;
@@ -119,7 +123,7 @@
 
   services.spice-vdagentd.enable = true;
 
-  # Maybe needed for gpu passthrough as guest
+  # Needed for gpu passthrough as guest
   # https://old.reddit.com/r/NixOS/comments/14cjbnr/gpu_passthrough_wont_work_in_nixos_guest/
   hardware.enableRedistributableFirmware = lib.mkDefault true;
 
@@ -176,7 +180,12 @@
 
   # Shell
   # programs.zsh.enable = true;
-  programs.fish.enable = true;
+  programs.fish = {
+    enable = true;
+    # interactiveShellInit = ''
+    #   set fish_greeting "Welcome to fish shell!"
+    # '';
+    };
 
   # System Packages
   environment.systemPackages = with import ./packages.nix {inherit pkgs config; }; my-package-set;

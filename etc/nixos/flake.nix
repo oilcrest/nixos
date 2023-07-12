@@ -16,12 +16,12 @@
           config.allowUnfree = true;
         };
       };
-      # pkgs = import nixpkgs { inherit system; config = { allowUnfree = true; };};
     in 
   {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       inherit system; 
-      #specialArgs = inputs; # forward inputs to modules
+      # specialArgs = inputs; # forward inputs to modules
+      specialArgs = { inherit inputs; };
       modules = [
           # Overlays-module makes "pkgs.unstable" available in configuration.nix
           ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
