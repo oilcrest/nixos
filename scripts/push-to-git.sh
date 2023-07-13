@@ -59,6 +59,7 @@ do
     fi
   fi
 done
+clear
 echo "Files pushed to git directory"
 read -n 1 -srp $'Do you wish to push the files to github (y/N)? ' key
 echo
