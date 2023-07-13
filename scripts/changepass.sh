@@ -15,7 +15,7 @@ fi
 
 sudo mkpasswd -m sha-512 "$p1" > /persist/passwords/user
 echo
-echo "New password written to /mnt/persist/passwords/user"
+echo "New password written to /persist/passwords/user"
 echo "Password will become active next time you run:" 
 echo "sudo nixos-rebuild switch"
 

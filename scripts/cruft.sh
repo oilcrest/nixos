@@ -7,7 +7,7 @@ echo "Written to root since the last boot"
 set -euo pipefail
 
 mkdir -p /mnt 
-mount -o subvol=/ /dev/vda3 /mnt
+mount -o subvol=@ /dev/vda3 /mnt
 
 OLD_TRANSID=$(sudo btrfs subvolume find-new /mnt/root-blank 9999999)
 OLD_TRANSID=${OLD_TRANSID#transid marker was }
