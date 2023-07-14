@@ -1,4 +1,4 @@
-# btrfs/disko-config.nix
+# tmpfs/disko-config.nix
 
 { disks ? [ "/dev/vda" ], ... }: {
   disko.devices = {
@@ -11,9 +11,10 @@
           format = "gpt";
           partitions = [
             {
+              type = "partition";
               name = "ESP";
-              start = "1MiB";
-              end = "1G";
+              start = "1M";
+              end = "512M";
               fs-type = "fat32";
               bootable = true;
               content = {
@@ -24,8 +25,9 @@
             }
             {
               name = "swap";
-              start = "1G";
-              end = "9G";
+              type = "partition";
+              start = "512M";
+              end = "32G";
               part-type = "primary";
               content = {
                 type = "swap";
@@ -34,51 +36,29 @@
             }
             {
               name = "root";
-              start = "9G";
+              type = "partition";
+              start = "32G";
               end = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = [ "-f" ]; # Override existing partition
                 subvolumes = {
-                  "@" = {
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  "@/root" = {
-                    mountpoint = "/";
-                    mountOptions = [ "compress=zstd" "noatime" ];
-                  };
-                  # Mountpoints inferred from subvolume name
-                  "@/home" = {
-                    mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" ];
-                  };
-                  "@/nix" = {
+                  "/nix" = {
                     mountpoint = "/nix";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@/persist" = {
-                    mountpoint = "/persist";
+                  "/persist" = {
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@/log" = {
+                  "/log" = {
                     mountpoint = "/var/log";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  # To avoid errors when deleting root subvolume, need
-                  # to have /srv and /tmp either as subvolumes or dirs
-                  # "/@/srv" = {
-                  #   mountpoint = "/srv";
-                  #   mountOptions = [ "compress=zstd" "noatime" ];
-                  # };
-                  # "/@/tmp" = {
-                  #   mountpoint = "/tmp";
-                  #   mountOptions = [ "compress=zstd" "noatime" ];
-                  # };
-                  "@/machines" = {
+                  "/machines" = {
                     mountpoint = "/var/lib/machines";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
-                  "@/portables" = {
+                  "/portables" = {
                     mountpoint = "/var/lib/portables";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };

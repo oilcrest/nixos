@@ -13,8 +13,7 @@ with lib;
     myParams = {
       myusername = "nixuser";
       myhostname = "nixos";
-      mysshkey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBDj2FdHqTEFS2AFwVXbc/93v+tKlD5MlSOFwWlGAJoNVFuOZh0sptdnaDR1XwIFCfGtFGvx0vNHJxe8uIFUbP0= (none)";
-      mydesktop = "kde";
+      mysshkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHBHgdGf1R+oChwv0dWI9HjXyZwtLzoSdWJb3AlXK4bo agonzalez@tp01";
     };
   };
 }
